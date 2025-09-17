@@ -1,0 +1,46 @@
+{
+  "$schema": "https://1c-syntax.github.io/bsl-language-server/configuration/schema.json",
+  "language": "ru",
+  "diagnosticLanguage": "ru",
+  "traceLevel": "off",
+  "diagnostics": {
+    "computeTrigger": "onType",
+    "parameters": {
+      "ExcessiveReturns": {
+        "maxEnableReturns": 3
+      },
+      "QuantityOptionalArguments": {
+        "maxOptionalArgumentsCount": 3
+      },
+      "LineLength": {
+        "maxLineLength": 120
+      },
+      "MethodSize": {
+        "maxMethodSize": 50
+      },
+      "CyclomaticComplexity": {
+        "maxComplexity": 20
+      },
+      "HardcodedPasswordInMethod": {
+        "passwordFieldNames": "Пароль|Password|Пароль1|Пароль2|IMAP|SMTP|ПарольДоступа"
+      },
+      "OneSymbolVariable": false,
+      "BooleanLiteral": false
+    },
+    "subsystemsFilter": {
+      "include": [
+        "Основная",
+        "БизнесПроцессы",
+        "Документооборот"
+      ],
+      "exclude": [
+        "Отчеты",
+        "Обработки",
+        "ТестовыеДанные"
+      ]
+    }
+  },
+  "codeActions": {
+    "quickFix": true
+  }
+}
