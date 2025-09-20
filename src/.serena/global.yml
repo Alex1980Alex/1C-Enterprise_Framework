@@ -1,0 +1,79 @@
+# Глобальная конфигурация Serena для 1C-Enterprise Framework
+# Этот файл содержит общие настройки для всех проектов в рамках фреймворка
+
+# Глобальные настройки для BSL проектов
+global_settings:
+  default_language: "bsl"
+  default_encoding: "utf-8"
+  
+# Общие игнорируемые пути для всех проектов 1С
+global_ignored_paths:
+  # Выходные каталоги
+  - "out/"
+  - "build/"
+  - "dist/"
+  - "target/"
+  
+  # Служебные каталоги 1С
+  - "DT-INF/"
+  - ".metadata/"
+  - "ConfigDumpInfo/"
+  - "bin/"
+  
+  # Файлы конфигурации (бинарные)
+  - "*.cf"
+  - "*.dt"
+  - "*.epf"
+  - "*.erf"
+  - "*.cfe"
+  
+  # Временные и служебные файлы
+  - "*.tmp"
+  - "*.bak"
+  - "*~"
+  - "*.log"
+  - "debug/"
+  - "logs/"
+  
+  # Файлы IDE
+  - ".vscode/"
+  - ".idea/"
+  - "*.suo"
+  - "*.user"
+
+# Автообнаружение проектов в каталогах
+project_discovery:
+  scan_directories:
+    - "projects/"
+    - "extensions/"
+  
+  # Признаки проекта 1С
+  project_markers:
+    - ".serena/project.yml"
+    - "src/Configuration/"
+    - "Configuration.xml"
+
+# Шаблоны проектов
+project_templates:
+  basic_config:
+    path: "templates/basic-config/"
+    description: "Базовая конфигурация 1С"
+  
+  bsp_template:
+    path: "templates/bsp-template/"
+    description: "Шаблон на основе БСП"
+
+# Настройки языкового сервера BSL
+bsl_settings:
+  # Автозагрузка BSL Language Server
+  auto_download: true
+  
+  # Настройки диагностики
+  diagnostics:
+    compute_triggers: ["onType", "onSave"]
+    publish_diagnostics: true
+  
+  # Настройки форматирования
+  formatting:
+    insert_final_newline: true
+    trim_trailing_whitespace: true
