@@ -1,46 +1,59 @@
-# Установка Serena в Claude Code
+# Настройка Serena MCP для Claude Desktop
 
-## Установка завершена
+## Проблема
+Оригинальный Serena требует Python 3.11/3.12, но у вас установлен Python 3.13.
 
-Serena успешно установлена в директории `D:\1C-Enterprise_Framework\serena`.
+## Решение
+Создан упрощенный MCP сервер `simple_serena_mcp.py` с базовой функциональностью Serena.
 
-## Добавление Serena в Claude Code
+## Возможности сервера
 
-Для добавления Serena в Claude Code выполните следующую команду в терминале Claude Code:
+1. **read_file** - Чтение файлов (UTF-8 и CP1251)
+2. **list_directory** - Просмотр содержимого директорий
+3. **search_files** - Поиск по файлам с поддержкой фильтров по типам
+4. **write_file** - Запись файлов
+5. **execute_command** - Выполнение системных команд
 
-### Вариант 1: Использование локальной установки
-```bash
-claude mcp add serena -- uv run --directory D:/1C-Enterprise_Framework/serena serena start-mcp-server --context ide-assistant --project D:/1C-Enterprise_Framework
+## Настройка Claude Desktop
+
+1. Откройте файл конфигурации Claude Desktop:
+   - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+
+2. Добавьте следующую конфигурацию:
+
+```json
+{
+  "mcpServers": {
+    "serena": {
+      "command": "python",
+      "args": [
+        "D:\\1C-Enterprise_Framework\\simple_serena_mcp.py"
+      ],
+      "env": {
+        "PYTHONPATH": "D:\\1C-Enterprise_Framework"
+      }
+    }
+  }
+}
 ```
 
-### Вариант 2: Использование uvx (рекомендуется)
-```bash
-claude mcp add serena -- uvx --from git+https://github.com/oraios/serena serena start-mcp-server --context ide-assistant --project D:/1C-Enterprise_Framework
-```
+3. Перезапустите Claude Desktop
 
-## Проверка установки
+## Проверка работы
 
-После добавления Serena, попросите Claude прочитать инструкции Serena:
-- Введите команду: `/mcp__serena__initial_instructions`
-- Или просто попросите: "read Serena's initial instructions"
+Сервер работает корректно - отвечает на запросы инициализации.
 
-## Основные возможности Serena
+## Использование в Claude
 
-1. **Семантический поиск кода** - поиск по символам, функциям, классам
-2. **Редактирование на основе LSP** - точное редактирование кода с учетом контекста
-3. **Управление проектами** - активация и индексация проектов
-4. **Память проекта** - сохранение знаний о проекте между сессиями
+После настройки в Claude Desktop вы сможете использовать команды:
 
-## Примечание для работы с 1С
+- Читать файлы: "Прочитай файл config.py"
+- Искать в проекте: "Найди все функции с именем 'get_data'"
+- Выполнять команды: "Запусти тесты проекта"
+- Работать с директориями: "Покажи содержимое папки src/"
 
-Serena не имеет встроенной поддержки языка 1С (BSL), но вы можете:
-1. Использовать общие инструменты поиска и редактирования файлов
-2. Работать с файлами `.bsl` как с текстовыми файлами
-3. Использовать регулярные выражения для поиска по коду 1С
+## Файлы проекта
 
-## Полезные команды Serena
-
-- Активация проекта: используйте инструмент `activate_project`
-- Индексация проекта: используйте инструмент `index_project`
-- Поиск файлов: используйте инструмент `find_files`
-- Поиск по содержимому: используйте инструмент `regex_search`
+- `simple_serena_mcp.py` - Основной MCP сервер
+- `claude_serena_config.json` - Пример конфигурации
+- `SERENA_SETUP.md` - Данная инструкция

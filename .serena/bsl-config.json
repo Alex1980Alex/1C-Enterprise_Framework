@@ -1,46 +1,31 @@
 {
-  "$schema": "https://1c-syntax.github.io/bsl-language-server/configuration/schema.json",
-  "language": "ru",
-  "diagnosticLanguage": "ru",
-  "traceLevel": "off",
+  "language": "bsl",
   "diagnostics": {
-    "computeTrigger": "onType",
+    "skipSupport": ["BSL", "OSCRIPT"],
     "parameters": {
-      "ExcessiveReturns": {
-        "maxEnableReturns": 3
-      },
-      "QuantityOptionalArguments": {
-        "maxOptionalArgumentsCount": 3
-      },
-      "LineLength": {
-        "maxLineLength": 120
-      },
-      "MethodSize": {
-        "maxMethodSize": 50
-      },
-      "CyclomaticComplexity": {
-        "maxComplexity": 20
-      },
-      "HardcodedPasswordInMethod": {
-        "passwordFieldNames": "Пароль|Password|Пароль1|Пароль2|IMAP|SMTP|ПарольДоступа"
-      },
-      "OneSymbolVariable": false,
-      "BooleanLiteral": false
-    },
-    "subsystemsFilter": {
-      "include": [
-        "Основная",
-        "БизнесПроцессы",
-        "Документооборот"
-      ],
-      "exclude": [
-        "Отчеты",
-        "Обработки",
-        "ТестовыеДанные"
-      ]
+      "computeDiagnosticsSkipSupport": "never"
     }
   },
-  "codeActions": {
-    "quickFix": true
-  }
+  "codeLens": {
+    "showCognitiveComplexity": true,
+    "showCyclomaticComplexity": true
+  },
+  "documentFormatting": {
+    "alignAnnotation": true,
+    "indentSpaceCount": 4
+  },
+  "trace": {
+    "server": "messages"
+  },
+  "configurationRoot": "src/",
+  "filePatterns": [
+    "**/*.bsl",
+    "**/*.os"
+  ],
+  "exclude": [
+    "**/build/**",
+    "**/dist/**",
+    "**/.venv/**",
+    "**/__pycache__/**"
+  ]
 }

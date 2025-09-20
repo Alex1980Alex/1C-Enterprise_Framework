@@ -3,6 +3,7 @@
 #  * For JavaScript, use typescript
 # Special requirements:
 #  * csharp: Requires the presence of a .sln file in the project folder.
+# Note: Using Python as closest match for BSL (1C:Enterprise) language
 language: python
 
 # whether to use the project's gitignore file to ignore files
