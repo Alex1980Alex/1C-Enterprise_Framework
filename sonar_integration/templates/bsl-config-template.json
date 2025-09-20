@@ -1,0 +1,63 @@
+{
+  "$schema": "https://1c-syntax.github.io/bsl-language-server/configuration/schema.json",
+  "title": "BSL Language Server Configuration Template",
+  "language": "ru",
+  "diagnosticLanguage": "ru",
+  "traceLevel": "off",
+  "diagnostics": {
+    "computeTrigger": "onType",
+    "parameters": {
+      "CyclomaticComplexity": {
+        "maxComplexity": 20,
+        "description": "Максимальная цикломатическая сложность метода"
+      },
+      "LineLength": {
+        "maxLineLength": 120,
+        "description": "Максимальная длина строки кода"
+      },
+      "MethodSize": {
+        "maxMethodSize": 50,
+        "description": "Максимальное количество строк в методе"
+      },
+      "ExcessiveReturns": {
+        "maxEnableReturns": 3,
+        "description": "Максимальное количество возвратов в методе"
+      },
+      "QuantityOptionalArguments": {
+        "maxOptionalArgumentsCount": 3,
+        "description": "Максимальное количество необязательных параметров"
+      },
+      "HardcodedPasswordInMethod": {
+        "passwordFieldNames": "Пароль|Password|Пароль1|Пароль2|IMAP|SMTP",
+        "description": "Поля, содержащие пароли"
+      },
+      "OneSymbolVariable": false,
+      "BooleanLiteral": false,
+      "CommentedCode": true,
+      "TodoComment": true,
+      "UndefinedVariable": true,
+      "DuplicateMethod": true,
+      "ExceptionHandling": true
+    },
+    "subsystemsFilter": {
+      "include": [
+        "Основная",
+        "БизнесПроцессы",
+        "Документооборот",
+        "Отчетность"
+      ],
+      "exclude": [
+        "ТестовыеДанные",
+        "Устаревшие",
+        "Временные"
+      ]
+    }
+  },
+  "codeActions": {
+    "quickFix": true
+  },
+  "formatting": {
+    "indentSize": 4,
+    "continueLineIndentSize": 8
+  }
+}

@@ -1,0 +1,23 @@
+# SonarQube Integration Requirements
+# Зависимости для модуля интеграции SonarQube
+
+# Базовые зависимости
+pathlib>=1.0.1
+dataclasses>=0.6; python_version<"3.7"
+
+# Для работы с Excel отчетами (опционально)
+pandas>=1.3.0
+openpyxl>=3.0.9
+
+# Для работы с JSON Schema валидацией
+jsonschema>=4.0.0
+
+# Для подпроцессов и системных команд
+subprocess32>=3.5.4; python_version<"3.3"
+
+# Для работы с датами
+python-dateutil>=2.8.0
+
+# Для тестирования (опционально)
+pytest>=6.0.0
+pytest-cov>=2.12.0

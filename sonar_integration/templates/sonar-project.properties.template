@@ -1,0 +1,52 @@
+# SonarQube Configuration Template for 1C:Enterprise Projects
+# Шаблон конфигурации SonarQube для проектов 1С:Предприятие
+
+# === Основные настройки проекта ===
+sonar.projectKey=1c-enterprise-project
+sonar.projectName=1С:Предприятие Проект
+sonar.projectVersion=1.0
+sonar.language=ru
+
+# === Пути к исходникам ===
+sonar.sources=src/
+sonar.tests=tests/
+sonar.inclusions=**/*.bsl,**/*.os,**/*.sdbl
+sonar.exclusions=**/node_modules/**,**/bin/**,**/obj/**
+
+# === BSL Language Server Settings ===
+# Цикломатическая сложность
+sonar.bsl.CyclomaticComplexity.maxComplexity=20
+
+# Длина строки
+sonar.bsl.LineLength.maxLineLength=120
+
+# Размер метода
+sonar.bsl.MethodSize.maxMethodSize=50
+
+# Количество возвратов
+sonar.bsl.ExcessiveReturns.maxEnableReturns=3
+
+# Количество необязательных параметров
+sonar.bsl.QuantityOptionalArguments.maxOptionalArgumentsCount=3
+
+# Пароли в коде
+sonar.bsl.HardcodedPasswordInMethod.passwordFieldNames=Пароль|Password|Пароль1|Пароль2|IMAP|SMTP
+
+# === Отключенные правила ===
+# Односимвольные переменные (часто используются в циклах)
+sonar.bsl.OneSymbolVariable=false
+
+# Булевы литералы
+sonar.bsl.BooleanLiteral=false
+
+# === Настройки качества кода ===
+sonar.qualitygate.wait=true
+
+# === Покрытие тестами ===
+sonar.coverage.exclusions=**/*.bsl
+
+# === Дублирование кода ===
+sonar.cpd.exclusions=**/*.bsl
+
+# === Логирование ===
+sonar.verbose=false

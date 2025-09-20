@@ -1,0 +1,99 @@
+{
+  "$schema": "https://1c-syntax.github.io/bsl-language-server/configuration/schema.json",
+  "title": "BSL Rules Catalog for 1C:Enterprise",
+  "description": "Каталог правил SonarQube для анализа кода 1С:Предприятие",
+  "version": "1.0.0",
+  "rules": {
+    "blocker": [
+      {
+        "key": "ExceptionHandling",
+        "name": "Обработка исключений",
+        "description": "Все исключения должны быть обработаны"
+      },
+      {
+        "key": "UndefinedVariable",
+        "name": "Неопределенные переменные",
+        "description": "Использование необъявленных переменных"
+      },
+      {
+        "key": "DuplicateMethod",
+        "name": "Дублирование методов",
+        "description": "Недопустимо дублирование методов"
+      }
+    ],
+    "critical": [
+      {
+        "key": "CyclomaticComplexity",
+        "name": "Цикломатическая сложность",
+        "description": "Контроль сложности методов",
+        "defaultValue": 20
+      },
+      {
+        "key": "HardcodedPasswordInMethod",
+        "name": "Захардкоженные пароли",
+        "description": "Недопустимо хранение паролей в коде"
+      },
+      {
+        "key": "MethodSize",
+        "name": "Размер метода",
+        "description": "Контроль размера методов",
+        "defaultValue": 50
+      }
+    ],
+    "major": [
+      {
+        "key": "LineLength",
+        "name": "Длина строки",
+        "description": "Максимальная длина строки кода",
+        "defaultValue": 120
+      },
+      {
+        "key": "ExcessiveReturns",
+        "name": "Избыточные возвраты",
+        "description": "Контроль количества возвратов в методе",
+        "defaultValue": 3
+      },
+      {
+        "key": "NamingConventions",
+        "name": "Соглашения об именовании",
+        "description": "Соблюдение стандартов именования"
+      }
+    ],
+    "minor": [
+      {
+        "key": "OneSymbolVariable",
+        "name": "Односимвольные переменные",
+        "description": "Избегать односимвольных имен переменных"
+      },
+      {
+        "key": "BooleanLiteral",
+        "name": "Булевы литералы",
+        "description": "Правильное использование булевых значений"
+      },
+      {
+        "key": "CommentedCode",
+        "name": "Закомментированный код",
+        "description": "Удаление неиспользуемого кода"
+      }
+    ],
+    "info": [
+      {
+        "key": "TodoComment",
+        "name": "TODO комментарии",
+        "description": "Отслеживание TODO комментариев"
+      },
+      {
+        "key": "CodeStyle",
+        "name": "Стиль кода",
+        "description": "Соблюдение стиля кодирования"
+      }
+    ]
+  },
+  "categories": {
+    "reliability": "Надежность",
+    "security": "Безопасность", 
+    "maintainability": "Сопровождаемость",
+    "performance": "Производительность",
+    "style": "Стиль кода"
+  }
+}

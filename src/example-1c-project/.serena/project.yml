@@ -23,7 +23,15 @@ ignored_paths:
 excluded_tools: []
 
 # Дополнительные инструменты (включаем BSL-специфичные)
-included_optional_tools: []
+included_optional_tools:
+  - get_current_config      # Диагностика конфигурации
+  - initial_instructions    # Инструкции для проекта
+  - restart_language_server # Перезапуск BSL Language Server
+  - summarize_changes       # Сводка изменений
+  - switch_modes           # Переключение режимов работы
+  - delete_lines           # Удаление строк
+  - insert_at_line         # Вставка в строку
+  - replace_lines          # Замена строк
 
 # Проект доступен для редактирования
 read_only: false

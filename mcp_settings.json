@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "serena": {
+      "command": "uv",
+      "args": ["run", "serena-mcp-server"],
+      "cwd": "./serena",
+      "env": {
+        "PYTHONPATH": "./serena/src",
+        "UV_PROJECT_ENVIRONMENT": "./serena/.venv"
+      }
+    }
+  }
+}

@@ -77,3 +77,14 @@ bsl_settings:
   formatting:
     insert_final_newline: true
     trim_trailing_whitespace: true
+
+# Глобальные дополнительные инструменты для всех 1С проектов
+global_included_optional_tools:
+  - get_current_config      # Диагностика конфигурации
+  - initial_instructions    # Инструкции для проекта
+  - restart_language_server # Перезапуск BSL Language Server
+  - summarize_changes       # Сводка изменений
+  - switch_modes           # Переключение режимов работы
+  - delete_lines           # Удаление строк
+  - insert_at_line         # Вставка в строку
+  - replace_lines          # Замена строк

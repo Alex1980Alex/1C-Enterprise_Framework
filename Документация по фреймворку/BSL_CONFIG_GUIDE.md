@@ -63,7 +63,25 @@ Serena теперь поддерживает расширенную конфиг
 
 ## Интеграция с SonarQube
 
-### sonar-project.properties
+### Автоматическая настройка через sonar_integration
+
+Используйте модуль `sonar_integration` для автоматической настройки:
+
+```bash
+# Инициализация проекта
+python -m sonar_integration init "my-1c-project" "Мой проект 1С" \
+    --max-complexity 20 \
+    --max-line-length 120 \
+    --max-method-size 50
+
+# Настройка CI/CD
+python -m sonar_integration ci github "my-1c-project"
+
+# Локальный анализ
+python -m sonar_integration analyze --src-dir src/
+```
+
+### Ручная настройка sonar-project.properties
 
 ```properties
 # Основные настройки проекта
@@ -169,7 +187,22 @@ Serena автоматически:
 ## Поддержка
 
 При возникновении проблем:
+
+### Использование sonar_integration
+```bash
+# Проверка доступных правил
+python -m sonar_integration rules --verbose
+
+# Тестирование конфигурации
+python -m sonar_integration analyze --src-dir src/ --output-dir test-reports/
+
+# Генерация отчетов
+python -m sonar_integration report test-reports/bsl-analysis.json --html --excel
+```
+
+### Общие проблемы
 1. Проверьте синтаксис JSON в конфигурационных файлах
 2. Просмотрите логи Serena для сообщений об ошибках
 3. Убедитесь, что все пути к файлам указаны корректно
 4. Используйте валидатор JSON Schema для проверки конфигурации
+5. Обратитесь к документации в `Документация по фреймворку/SONAR_INTEGRATION.md`
