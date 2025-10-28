@@ -440,9 +440,6 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 
 **Интегрируется с**:
 - `06-development-scenarios.md` - процессы разработки (документы "Сценарий разработки")
-- `10-role-architect.md` - архитектурные решения
-- `11-role-analyst.md` - анализ требований  
-- `13-role-programmer.md` - техническая реализация
 - `03-quality-control.md` - контроль качества ответов
 - `07-automation-rules.md` - автоматизация соблюдения правил
 

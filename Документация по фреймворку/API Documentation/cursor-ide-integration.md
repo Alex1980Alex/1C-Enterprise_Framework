@@ -34,11 +34,7 @@ cursor-rules/ (17 модулей)
 ├── 06-development-scenarios.md # Сценарии разработки
 ├── 07-automation-rules.md      # Правила автоматизации
 ├── 08-mcp-memory.md           # Система памяти MCP
-├── 09-unified-architecture.md  # Унифицированная архитектура
-├── 10-role-architect.md        # 🏗️ Роль: Архитектор
-├── 11-role-analyst.md         # 📊 Роль: Аналитик
-├── 12-role-consultant.md      # 🎓 Роль: Консультант
-└── 13-role-programmer.md      # 💻 Роль: Программист
+└── 09-unified-architecture.md  # Унифицированная архитектура
 ```
 
 ### **Файл .cursorrules:**
@@ -58,10 +54,6 @@ cursor-rules/ (17 модулей)
 @cursor-rules/07-automation-rules.md
 @cursor-rules/08-mcp-memory.md
 @cursor-rules/09-unified-architecture.md
-@cursor-rules/10-role-architect.md
-@cursor-rules/11-role-analyst.md
-@cursor-rules/12-role-consultant.md
-@cursor-rules/13-role-programmer.md
 ```
 
 ---

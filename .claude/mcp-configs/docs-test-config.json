@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "1c-docs-test": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@arabold/docs-mcp-server@latest",
+        "--protocol", "stdio"
+      ],
+      "env": {
+        "DOCS_PATH": "D:\\1C-Enterprise_Framework\\Документация по фреймворку",
+        "ENABLE_SEMANTIC_CHUNKING": "true",
+        "CHUNK_SIZE": "1000",
+        "OVERLAP_SIZE": "200"
+      }
+    }
+  }
+}

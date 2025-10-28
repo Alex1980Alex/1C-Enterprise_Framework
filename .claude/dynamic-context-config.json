@@ -1,0 +1,71 @@
+{
+  "version": "1.0",
+  "description": "Конфигурация Dynamic Context Engine для интеллектуального выбора MCP инструментов",
+  "weights": {
+    "file_type_match": 0.4,
+    "semantic_match": 0.3,
+    "complexity_match": 0.2,
+    "learning_bonus": 0.1
+  },
+  "confidence_thresholds": {
+    "high": 0.8,
+    "medium": 0.6,
+    "low": 0.4
+  },
+  "tool_availability": {
+    "mcp__ast-grep-mcp__ast_grep": true,
+    "mcp__serena__get_symbols_overview": true,
+    "mcp__serena__find_symbol": true,
+    "mcp__serena__find_referencing_symbols": true,
+    "mcp__serena__replace_symbol_body": true,
+    "mcp__serena__insert_after_symbol": true,
+    "mcp__serena__search_for_pattern": true,
+    "mcp__1c-framework-docs__search_docs": true,
+    "mcp__universal-web-scraper__scrape_website": true,
+    "mcp__docling__convert_document": true,
+    "mcp__memory__create_entities": true,
+    "mcp__sequential-thinking__sequentialthinking": true
+  },
+  "advanced_settings": {
+    "enable_learning": true,
+    "max_recommendations": 5,
+    "cache_recommendations": true,
+    "log_level": "INFO",
+    "performance_monitoring": true
+  },
+  "bsl_specific": {
+    "mandatory_ast_grep": true,
+    "ast_grep_confidence_boost": 0.3,
+    "serena_fallback_enabled": true,
+    "prefer_semantic_analysis": true
+  },
+  "domain_priorities": {
+    "1c": {
+      "primary_tools": [
+        "mcp__ast-grep-mcp__ast_grep",
+        "mcp__serena__get_symbols_overview",
+        "mcp__serena__find_symbol"
+      ],
+      "weight_multiplier": 1.2
+    },
+    "documentation": {
+      "primary_tools": [
+        "mcp__1c-framework-docs__search_docs",
+        "mcp__universal-web-scraper__scrape_website"
+      ],
+      "weight_multiplier": 1.1
+    },
+    "web": {
+      "primary_tools": [
+        "mcp__universal-web-scraper__scrape_website"
+      ],
+      "weight_multiplier": 1.0
+    },
+    "documents": {
+      "primary_tools": [
+        "mcp__docling__convert_document"
+      ],
+      "weight_multiplier": 1.0
+    }
+  }
+}

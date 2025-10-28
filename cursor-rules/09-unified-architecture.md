@@ -27,11 +27,7 @@ cursor-rules/ (ЦЕНТРАЛЬНОЕ ЯДРО)
 ├── 06-development-scenarios.md # Сценарии разработки
 ├── 07-automation-rules.md   # Правила автоматизации процессов
 ├── 08-mcp-memory.md         # Система памяти и знаний MCP
-├── 09-unified-architecture.md # Унифицированная архитектура
-├── 10-role-architect.md     # 🏗️ Роль: Архитектор проекта
-├── 11-role-analyst.md       # 📊 Роль: Аналитик  
-├── 12-role-consultant.md    # 🎓 Роль: Консультант
-└── 13-role-programmer.md    # 💻 Роль: Программист
+└── 09-unified-architecture.md # Унифицированная архитектура
 ```
 
 ## 🏗️ АРХИТЕКТУРНЫЕ СЛОИ

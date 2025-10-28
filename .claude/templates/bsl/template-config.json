@@ -1,0 +1,164 @@
+{
+  "bsl_templates": {
+    "version": "1.0.0",
+    "description": "BSL-specific documentation templates for 1C:Enterprise development",
+    "framework_integration": true,
+    "templates": {
+      "common-module": {
+        "file": "common-module.md",
+        "triggers": [
+          "**/*CommonModules/**/*.bsl",
+          "**/ОбщиеМодули/**/*.bsl"
+        ],
+        "context_extractors": [
+          "extract_bsl_procedures",
+          "extract_bsl_dependencies",
+          "extract_export_functions"
+        ],
+        "documentation_type": "module_documentation",
+        "priority": "high"
+      },
+      "object-module": {
+        "file": "object-module.md", 
+        "triggers": [
+          "**/Ext/ObjectModule.bsl",
+          "**/Ext/ManagerModule.bsl",
+          "**/Forms/*/Ext/Form/Module.bsl"
+        ],
+        "context_extractors": [
+          "extract_object_events",
+          "extract_business_logic",
+          "extract_form_events",
+          "analyze_posting_algorithm"
+        ],
+        "documentation_type": "object_documentation",
+        "priority": "high"
+      },
+      "configuration-analysis": {
+        "file": "configuration-analysis.md",
+        "triggers": [
+          "**/Configuration.xml",
+          "configuration_full_analysis"
+        ],
+        "context_extractors": [
+          "analyze_metadata_structure",
+          "extract_subsystem_dependencies", 
+          "analyze_bsl_quality",
+          "extract_security_settings"
+        ],
+        "documentation_type": "architecture_analysis",
+        "priority": "medium",
+        "schedule": "weekly"
+      },
+      "subsystem-analysis": {
+        "file": "subsystem-analysis.md",
+        "triggers": [
+          "subsystem_analysis_request",
+          "**/Subsystems/*/Ext/Subsystem.xml"
+        ],
+        "context_extractors": [
+          "analyze_subsystem_objects",
+          "extract_business_processes",
+          "analyze_subsystem_dependencies",
+          "calculate_subsystem_metrics"
+        ],
+        "documentation_type": "subsystem_documentation",
+        "priority": "medium"
+      }
+    },
+    "context_extractors": {
+      "extract_bsl_procedures": {
+        "description": "Extracts procedures and functions from BSL modules",
+        "output_variables": [
+          "EXPORT_PROCEDURES",
+          "INTERNAL_PROCEDURES", 
+          "PARAMETERS",
+          "RETURN_VALUE"
+        ]
+      },
+      "extract_bsl_dependencies": {
+        "description": "Analyzes module dependencies and metadata references",
+        "output_variables": [
+          "DEPENDENCIES",
+          "METADATA_REFS",
+          "USAGE_CONTEXT"
+        ]
+      },
+      "extract_object_events": {
+        "description": "Extracts object event handlers",
+        "output_variables": [
+          "OBJECT_EVENTS",
+          "FORM_EVENTS",
+          "EVENT_CONTEXT"
+        ]
+      },
+      "analyze_posting_algorithm": {
+        "description": "Analyzes document posting algorithms",
+        "output_variables": [
+          "POSTING_ALGORITHM",
+          "REGISTER_RECORDS",
+          "BALANCE_CONTROL"
+        ]
+      },
+      "analyze_metadata_structure": {
+        "description": "Analyzes full configuration metadata structure",
+        "output_variables": [
+          "SUBSYSTEMS",
+          "METADATA_STATS",
+          "CATALOGS",
+          "DOCUMENTS",
+          "REGISTERS"
+        ]
+      },
+      "analyze_bsl_quality": {
+        "description": "Integrates BSL Language Server analysis results",
+        "output_variables": [
+          "BSL_COMPLIANCE_REPORT",
+          "TOTAL_ISSUES",
+          "TOP_ISSUES",
+          "TOP_PROBLEMATIC_MODULES"
+        ]
+      }
+    },
+    "variable_mappings": {
+      "common": {
+        "PROJECT_NAME": "auto_extract_project_name",
+        "TIMESTAMP": "current_timestamp",
+        "FRAMEWORK_VERSION": "get_framework_version",
+        "BSL_CHECK_STATUS": "run_bsl_language_server"
+      },
+      "bsl_specific": {
+        "MODULE_NAME": "extract_from_filename",
+        "MODULE_PATH": "get_relative_path",
+        "OBJECT_TYPE": "extract_from_metadata",
+        "SUBSYSTEM_NAME": "extract_from_subsystem_xml"
+      }
+    },
+    "integration_settings": {
+      "bsl_language_server": {
+        "enabled": true,
+        "command": "python -m sonar_integration analyze",
+        "output_format": "json",
+        "severity_levels": ["BLOCKER", "CRITICAL", "MAJOR", "MINOR", "INFO"]
+      },
+      "ast_grep_bsl": {
+        "enabled": true,
+        "patterns_file": "bsl-patterns.yml",
+        "custom_parser": "tree-sitter-bsl"
+      },
+      "mcp_reasoner": {
+        "enabled": true,
+        "algorithms": ["architecture_analysis", "duplicate_detection", "performance_analysis"],
+        "output_integration": true
+      }
+    },
+    "output_settings": {
+      "encoding": "utf-8",
+      "line_endings": "crlf",
+      "language": "ru",
+      "include_mermaid": true,
+      "include_code_samples": true,
+      "max_code_sample_lines": 20
+    }
+  }
+}

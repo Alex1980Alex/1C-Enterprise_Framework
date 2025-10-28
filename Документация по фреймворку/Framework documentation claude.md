@@ -107,10 +107,6 @@
 │                                                         │
 │  🎭 РОЛЕВАЯ МОДЕЛЬ AI:                                  │
 │  • 00-role-selector.md     - 🎯 Автовыбор роли         │
-│  • 10-role-architect.md    - 🏗️ Системный архитектор   │
-│  • 11-role-analyst.md      - 📊 Бизнес-аналитик       │
-│  • 12-role-consultant.md   - 🎓 Предметный эксперт     │
-│  • 13-role-programmer.md   - 💻 Техпрограммист         │
 │                                                         │
 │  📚 ЭКСПЕРТНЫЕ НАВЫКИ:                                  │
 │  • 01a-technical-programming-skills.md - 1С:Язык       │
