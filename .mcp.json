@@ -1,0 +1,275 @@
+{
+  "mcpServers": {
+    "ast-grep-mcp": {
+      "command": "node",
+      "args": [
+        "mcp-ast-grep/dist/index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "BSL_INTEGRATION": "true",
+        "AST_CACHE_ENABLED": "true",
+        "AST_CACHE_DIR": "cache\\ast-grep",
+        "AST_CACHE_TTL_HOURS": "24",
+        "AST_CACHE_MAX_SIZE_MB": "1000",
+        "AST_CACHE_COMPRESSION": "true",
+        "AST_CACHE_BACKGROUND_CLEANUP": "true",
+        "AST_CACHE_PERFORMANCE_MONITORING": "true",
+        "AST_CACHE_PREFIX": "ast-grep",
+        "AST_CACHE_LANGUAGES": "bsl,javascript,typescript,python,java,json"
+      }
+    },
+    "filesystem": {
+      "command": "node",
+      "args": [
+        "mcp-servers/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "PROJECT_ROOT": "D:\\1C-Enterprise_Framework"
+      }
+    },
+    "github": {
+      "command": "node",
+      "args": [
+        "mcp-servers/node_modules/@modelcontextprotocol/server-github/dist/index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "GITHUB_INTEGRATION": "true"
+      }
+    },
+    "memory": {
+      "command": "node",
+      "args": [
+        "mcp-servers/node_modules/@modelcontextprotocol/server-memory/dist/index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MEMORY_PERSISTENCE": "true",
+        "CACHE_DIR": "D:\\1C-Enterprise_Framework\\cache\\memory-graph"
+      }
+    },
+    "sequential-thinking": {
+      "command": "node",
+      "args": [
+        "mcp-servers/node_modules/@modelcontextprotocol/server-sequential-thinking/dist/index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "BSL_SPECIALIZATION": "true",
+        "MAX_THOUGHTS": "20"
+      }
+    },
+    "brave-search": {
+      "command": "node",
+      "args": [
+        "mcp-servers/node_modules/@modelcontextprotocol/server-brave-search/dist/index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "BRAVE_API_KEY": "BSAiTfUVVIGwCzgSqfI5xUcjQp5TkLy",
+        "BSL_SEARCH_FILTERING": "true"
+      }
+    },
+    "clipboard": {
+      "command": "node",
+      "args": [
+        "index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "BSL_CLIPBOARD_SUPPORT": "true"
+      }
+    },
+    "docs": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "python",
+        "mcp_server.py"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "PYTHONIOENCODING": "utf-8",
+        "BSL_DOCS_SUPPORT": "true"
+      }
+    },
+    "task-master": {
+      "command": "node",
+      "args": [
+        "mcp-server/server.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "TASKMASTER_PROJECT_ROOT": "D:\\1C-Enterprise_Framework\\claude-task-master",
+        "BSL_INTEGRATION": "true",
+        "SONAR_INTEGRATION": "true"
+      }
+    },
+    "reasoner": {
+      "command": "node",
+      "args": [
+        "dist/index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "BSL_ARCHITECTURE_ANALYSIS": "true",
+        "REASONER_ALGORITHM": "MCTS"
+      }
+    },
+    "bsl-semantic-diff": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "python",
+        "mcp_server.py"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "PYTHONIOENCODING": "utf-8",
+        "BSL_SEMANTIC_ANALYSIS": "true"
+      }
+    },
+    "task-master-ai": {
+      "command": "node",
+      "args": [
+        "mcp-server/server.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "TASKMASTER_PROJECT_ROOT": "D:\\1C-Enterprise_Framework\\claude-task-master",
+        "AI_MODE": "enhanced",
+        "BSL_INTEGRATION": "true"
+      }
+    },
+    "grep-mcp": {
+      "command": "C:\\Users\\AlexT\\AppData\\Roaming\\npm\\grep-mcp.cmd",
+      "args": [
+        "--transport",
+        "stdio"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "BSL_GREP_SUPPORT": "true"
+      }
+    },
+    "auto-documenter": {
+      "command": "node",
+      "args": [
+        "src/index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "DOCS_BASE_PATH": "D:\\1C-Enterprise_Framework\\Документация по фреймворку\\Auto-Generated",
+        "CLAUDE_AGENTS_PATH": "D:\\1C-Enterprise_Framework\\.claude\\agents",
+        "BSL_DOCS_GENERATION": "true"
+      }
+    },
+    "ast-grep-python": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "python",
+        "main.py",
+        "--config",
+        "sgconfig.yaml"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "PYTHONIOENCODING": "utf-8",
+        "BSL_AST_ANALYSIS": "true",
+        "AST_CACHE_ENABLED": "true",
+        "AST_CACHE_DIR": "cache\\ast-grep",
+        "AST_CACHE_TTL_HOURS": "24",
+        "AST_CACHE_MAX_SIZE_MB": "1000",
+        "AST_CACHE_COMPRESSION": "true",
+        "AST_CACHE_BACKGROUND_CLEANUP": "true",
+        "AST_CACHE_PERFORMANCE_MONITORING": "true"
+      }
+    },
+    "playwright": {
+      "command": "node",
+      "args": [
+        "mcp-servers/node_modules/@playwright/mcp/dist/index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "PLAYWRIGHT_BROWSERS_PATH": "D:\\1C-Enterprise_Framework\\cache\\playwright-browsers",
+        "PLAYWRIGHT_TIMEOUT": "30000",
+        "BSL_WEB_TESTING": "true"
+      }
+    },
+    "playwright-automation": {
+      "command": "node",
+      "args": [
+        "playwright-automation/dist/index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "PLAYWRIGHT_BROWSERS_PATH": "D:\\1C-Enterprise_Framework\\cache\\playwright-browsers",
+        "PLAYWRIGHT_TIMEOUT": "30000",
+        "BSL_AUTOMATION_SUPPORT": "true"
+      }
+    },
+    "1c-framework-docs": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "python",
+        "1c-framework-docs/mcp_server.py"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "PYTHONIOENCODING": "utf-8",
+        "DOCS_PATH": "D:\\1C-Enterprise_Framework\\Документация по фреймворку",
+        "ENABLE_SEMANTIC_CHUNKING": "true",
+        "CHUNK_SIZE": "1000",
+        "OVERLAP_SIZE": "200",
+        "ENABLE_CACHE": "true",
+        "CACHE_DIR": "D:\\1C-Enterprise_Framework\\cache\\docs-mcp",
+        "BSL_FRAMEWORK_DOCS": "true"
+      }
+    },
+    "serena": {
+      "type": "stdio",
+      "command": "C:\\Users\\AlexT\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\uv.exe",
+      "args": [
+        "run",
+        "--directory",
+        "D:/1C-Enterprise_Framework/serena",
+        "serena-mcp-server",
+        "--context",
+        "desktop-app",
+        "--project",
+        "D:/1C-Enterprise_Framework"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_TIMEOUT": "120000",
+        "BSL_CODE_ANALYSIS": "true",
+        "SONAR_INTEGRATION": "true"
+      }
+    },
+    "1c-enterprise-database": {
+      "command": "D:\\1C-Enterprise_Framework\\mcp-1c-server\\venv\\Scripts\\python.exe",
+      "args": [
+        "-m",
+        "py_server",
+        "stdio"
+      ],
+      "cwd": "D:\\1C-Enterprise_Framework\\mcp-1c-server",
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_ONEC_URL": "http://localhost/251017_GKSTCPLK-1794",
+        "MCP_ONEC_USERNAME": "a.terletskiy@sodrugestvo.ru",
+        "MCP_ONEC_PASSWORD": "1234",
+        "MCP_ONEC_SERVICE_ROOT": "mcp",
+        "MCP_LOG_LEVEL": "INFO",
+        "MCP_AUTH_MODE": "none",
+        "BSL_DATABASE_INTEGRATION": "true",
+        "ONEC_METADATA_CACHE": "true"
+      }
+    }
+  }
+}

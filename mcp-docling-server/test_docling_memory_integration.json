@@ -1,0 +1,83 @@
+{
+  "export_timestamp": "2025-10-22T00:37:02.312914",
+  "total_documents": 1,
+  "total_entities": 3,
+  "total_relations": 5,
+  "memory_entities": [
+    {
+      "name": "Document_test_document",
+      "entityType": "processed_document",
+      "observations": [
+        "Title: test_document.md",
+        "Source: test_document.md",
+        "Word count: 110",
+        "Complexity: medium",
+        "Document type: technical",
+        "Has headers: True",
+        "Has tables: False",
+        "Has code blocks: False",
+        "Framework: 1C-Enterprise",
+        "Processed: 2025-10-22T00:37:02.312850"
+      ]
+    },
+    {
+      "name": "Content_Analysis_test_document",
+      "entityType": "content_analysis",
+      "observations": [
+        "Lines: 30",
+        "Words: 110",
+        "Structural elements: headers",
+        "Analysis timestamp: 2025-10-22T00:37:02.312850"
+      ]
+    },
+    {
+      "name": "Technical_Content_test_document",
+      "entityType": "technical_documentation",
+      "observations": [
+        "Framework context: 1C-Enterprise",
+        "Contains code blocks: False",
+        "Contains tables: False",
+        "Complexity level: medium"
+      ]
+    }
+  ],
+  "memory_relations": [
+    {
+      "from": "Document_test_document",
+      "to": "Content_Analysis_test_document",
+      "relationType": "analyzed_by"
+    },
+    {
+      "from": "Document_test_document",
+      "to": "Docling_Integration_System",
+      "relationType": "processed_by"
+    },
+    {
+      "from": "Content_Analysis_test_document",
+      "to": "1C_Enterprise_Framework",
+      "relationType": "related_to"
+    },
+    {
+      "from": "Document_test_document",
+      "to": "Technical_Content_test_document",
+      "relationType": "contains"
+    },
+    {
+      "from": "Technical_Content_test_document",
+      "to": "Technical_Documentation_System",
+      "relationType": "categorized_by"
+    }
+  ],
+  "processed_documents_summary": [
+    {
+      "source": "test_document.md",
+      "title": "test_document.md",
+      "content_length": 843,
+      "timestamp": "b536ba43-4836-4799-bd97-790cc1a7222f"
+    }
+  ],
+  "mcp_commands": {
+    "create_entities": "mcp__memory__create_entities(3 entities)",
+    "create_relations": "mcp__memory__create_relations(5 relations)"
+  }
+}

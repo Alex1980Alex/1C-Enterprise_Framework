@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSL Code Semantic Search</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .search-box {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        .search-input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        #searchQuery {
+            flex: 1;
+            padding: 15px 20px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            transition: border-color 0.3s;
+        }
+
+        #searchQuery:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .search-button {
+            padding: 15px 40px;
+            font-size: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+        }
+
+        .search-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .search-button:active {
+            transform: translateY(0);
+        }
+
+        .search-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .options {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .option-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option-group label {
+            font-weight: 500;
+            color: #555;
+        }
+
+        .option-group input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .status {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .status.info {
+            background: #e3f2fd;
+            color: #1976d2;
+            border-left: 4px solid #1976d2;
+            display: block;
+        }
+
+        .status.error {
+            background: #ffebee;
+            color: #c62828;
+            border-left: 4px solid #c62828;
+            display: block;
+        }
+
+        .status.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-left: 4px solid #2e7d32;
+            display: block;
+        }
+
+        .results {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .results-header {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .results-header h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .results-meta {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .result-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .result-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .result-score {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .result-path {
+            flex: 1;
+            margin-right: 15px;
+        }
+
+        .result-path strong {
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+            word-break: break-all;
+        }
+
+        .result-type {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #4c51bf;
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .result-stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .result-stats span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .result-text {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #444;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .no-results h3 {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .search-input-group {
+                flex-direction: column;
+            }
+
+            .options {
+                flex-direction: column;
+                align-items: start;
+            }
+
+            .result-header {
+                flex-direction: column;
+            }
+
+            .result-path {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 BSL Code Semantic Search</h1>
+            <p>Семантический поиск по коду 1С:Предприятие</p>
+        </div>
+
+        <div class="search-box">
+            <div class="search-input-group">
+                <input
+                    type="text"
+                    id="searchQuery"
+                    placeholder="Введите запрос (например: работа с документами и проведение)"
+                    autocomplete="off"
+                >
+                <button class="search-button" id="searchButton" onclick="performSearch()">
+                    Найти
+                </button>
+            </div>
+
+            <div class="options">
+                <div class="option-group">
+                    <label for="topK">Результатов:</label>
+                    <input type="number" id="topK" value="10" min="1" max="50">
+                </div>
+                <div class="option-group">
+                    <label for="scoreThreshold">Мин. релевантность:</label>
+                    <input type="number" id="scoreThreshold" value="0.0" min="0" max="1" step="0.1">
+                </div>
+                <div class="option-group">
+                    <label for="apiKey">🔑 API Key (опционально):</label>
+                    <input type="password" id="apiKey" placeholder="Оставьте пустым если не требуется" style="width: 250px;">
+                </div>
+            </div>
+
+            <div class="status" id="status"></div>
+        </div>
+
+        <div class="results" id="results">
+            <div class="results-header">
+                <h2>Результаты поиска</h2>
+                <div class="results-meta" id="resultsMeta"></div>
+            </div>
+            <div id="resultsContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8000';
+
+        // Enter key support
+        document.getElementById('searchQuery').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        function showStatus(message, type = 'info') {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = 'status ' + type;
+        }
+
+        function hideStatus() {
+            const status = document.getElementById('status');
+            status.className = 'status';
+        }
+
+        // Load API key from localStorage on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedApiKey = localStorage.getItem('bsl_api_key');
+            if (savedApiKey) {
+                document.getElementById('apiKey').value = savedApiKey;
+            }
+        });
+
+        // Save API key to localStorage when changed
+        document.getElementById('apiKey').addEventListener('change', function(e) {
+            const apiKey = e.target.value.trim();
+            if (apiKey) {
+                localStorage.setItem('bsl_api_key', apiKey);
+            } else {
+                localStorage.removeItem('bsl_api_key');
+            }
+        });
+
+        async function performSearch() {
+            const query = document.getElementById('searchQuery').value.trim();
+            const topK = parseInt(document.getElementById('topK').value);
+            const scoreThreshold = parseFloat(document.getElementById('scoreThreshold').value);
+            const apiKey = document.getElementById('apiKey').value.trim();
+
+            if (!query) {
+                showStatus('Пожалуйста, введите поисковый запрос', 'error');
+                return;
+            }
+
+            const searchButton = document.getElementById('searchButton');
+            searchButton.disabled = true;
+            searchButton.innerHTML = 'Поиск...<span class="spinner"></span>';
+
+            showStatus('Выполняется поиск...', 'info');
+            document.getElementById('results').classList.remove('show');
+
+            try {
+                const startTime = performance.now();
+
+                // Prepare headers
+                const headers = {
+                    'Content-Type': 'application/json',
+                };
+
+                // Add Authorization header if API key is provided
+                if (apiKey) {
+                    headers['Authorization'] = `Bearer ${apiKey}`;
+                }
+
+                const response = await fetch(`${API_BASE_URL}/api/v1/search`, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({
+                        query: query,
+                        top_k: topK,
+                        score_threshold: scoreThreshold
+                    })
+                });
+
+                const endTime = performance.now();
+                const searchTime = Math.round(endTime - startTime);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                displayResults(data, searchTime);
+                showStatus(`Найдено ${data.total_found} результатов за ${searchTime} мс`, 'success');
+
+            } catch (error) {
+                console.error('Search error:', error);
+                showStatus(`Ошибка поиска: ${error.message}`, 'error');
+                document.getElementById('results').classList.remove('show');
+            } finally {
+                searchButton.disabled = false;
+                searchButton.innerHTML = 'Найти';
+            }
+        }
+
+        function displayResults(data, searchTime) {
+            const resultsContainer = document.getElementById('resultsContainer');
+            const resultsMeta = document.getElementById('resultsMeta');
+
+            if (data.total_found === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="no-results">
+                        <h3>Результаты не найдены</h3>
+                        <p>Попробуйте изменить запрос или уменьшить минимальную релевантность</p>
+                    </div>
+                `;
+                resultsMeta.textContent = `Запрос: "${data.query}" | Время: ${searchTime} мс`;
+                document.getElementById('results').classList.add('show');
+                return;
+            }
+
+            resultsMeta.textContent = `Запрос: "${data.query}" | Найдено: ${data.total_found} | Время: ${searchTime} мс`;
+
+            resultsContainer.innerHTML = data.results.map((result, index) => `
+                <div class="result-item">
+                    <div class="result-header">
+                        <div class="result-path">
+                            <strong>${result.file_path}</strong>
+                            <span class="result-type">${result.module_type}</span>
+                        </div>
+                        <div class="result-score">${(result.score * 100).toFixed(1)}%</div>
+                    </div>
+                    <div class="result-stats">
+                        <span>📊 Функций: ${result.functions_count}</span>
+                        <span>📝 Переменных: ${result.variables_count}</span>
+                    </div>
+                    <div class="result-text">${escapeHtml(result.searchable_text.substring(0, 500))}${result.searchable_text.length > 500 ? '...' : ''}</div>
+                </div>
+            `).join('');
+
+            document.getElementById('results').classList.add('show');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Load example queries
+        const exampleQueries = [
+            'работа с документами и проведение',
+            'регистры накопления и движения',
+            'формирование отчета и запросы',
+            'обработка данных и фоновые задания',
+            'интеграция с внешними системами'
+        ];
+
+        document.getElementById('searchQuery').addEventListener('focus', function() {
+            if (!this.value) {
+                const randomQuery = exampleQueries[Math.floor(Math.random() * exampleQueries.length)];
+                this.placeholder = `Например: ${randomQuery}`;
+            }
+        });
+    </script>
+</body>
+</html>

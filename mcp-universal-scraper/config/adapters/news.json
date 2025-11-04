@@ -1,0 +1,95 @@
+{
+  "adapter": "news",
+  "description": "Адаптер для новостных сайтов и блогов",
+  "patterns": {
+    "domains": ["news.", "blog.", "press.", "media."],
+    "urls": ["/news/", "/blog/", "/articles/", "/press/"],
+    "indicators": ["article", "published", "author", "date", "category"]
+  },
+  "selectors": {
+    "title": [
+      "h1.headline",
+      ".article-title",
+      ".post-title",
+      "h1.entry-title",
+      ".news-title"
+    ],
+    "content": [
+      ".article-body",
+      ".post-content",
+      ".entry-content",
+      ".news-content",
+      ".article-text"
+    ],
+    "metadata": {
+      "author": [
+        ".author",
+        ".byline",
+        ".article-author",
+        "[rel='author']"
+      ],
+      "date": [
+        ".published",
+        ".date",
+        ".article-date",
+        "time[datetime]",
+        ".timestamp"
+      ],
+      "category": [
+        ".category",
+        ".tags",
+        ".article-category",
+        ".post-category"
+      ]
+    },
+    "excerpt": [
+      ".excerpt",
+      ".summary",
+      ".lead",
+      ".article-summary"
+    ],
+    "image": [
+      ".featured-image img",
+      ".article-image img",
+      ".hero-image img"
+    ]
+  },
+  "extraction": {
+    "removeElements": [
+      "script",
+      "style",
+      ".advertisement",
+      ".sidebar",
+      ".comments",
+      ".social-share",
+      ".related-posts"
+    ],
+    "preserveStructure": true,
+    "extractCode": false,
+    "extractImages": true,
+    "extractLinks": true,
+    "minContentLength": 200,
+    "maxContentLength": 50000
+  },
+  "crawling": {
+    "followInternalLinks": true,
+    "maxDepth": 1,
+    "respectRobotsTxt": true,
+    "delay": 1500,
+    "maxPages": 20,
+    "prioritizeRecent": true,
+    "dateRange": {
+      "enabled": false,
+      "from": "",
+      "to": ""
+    }
+  },
+  "output": {
+    "format": "markdown",
+    "includeMetadata": true,
+    "includeTimestamp": true,
+    "generateToc": false,
+    "includeAuthor": true,
+    "includeDate": true
+  }
+}

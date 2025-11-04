@@ -1,0 +1,76 @@
+{
+  "adapter": "documentation",
+  "description": "Специализированный адаптер для документационных сайтов",
+  "patterns": {
+    "domains": ["docs.", "documentation.", "wiki.", "help.", "support."],
+    "urls": ["/docs/", "/documentation/", "/wiki/", "/help/", "/api/"],
+    "indicators": ["table of contents", "navigation", "breadcrumbs", "version selector"]
+  },
+  "selectors": {
+    "title": [
+      "h1",
+      ".doc-title",
+      ".page-title",
+      "title",
+      ".main-title"
+    ],
+    "content": [
+      ".doc-content",
+      ".documentation-content",
+      ".wiki-content",
+      "main article",
+      ".content",
+      ".page-content"
+    ],
+    "navigation": [
+      ".toc",
+      ".table-of-contents",
+      ".sidebar-nav",
+      ".doc-nav",
+      "nav"
+    ],
+    "breadcrumbs": [
+      ".breadcrumb",
+      ".breadcrumbs",
+      "nav[aria-label='breadcrumb']"
+    ],
+    "nextPage": [
+      "a[rel='next']",
+      ".next-page",
+      ".pagination-next"
+    ],
+    "previousPage": [
+      "a[rel='prev']",
+      ".prev-page",
+      ".pagination-prev"
+    ]
+  },
+  "extraction": {
+    "removeElements": [
+      "script",
+      "style",
+      ".advertisement",
+      ".ads",
+      ".sidebar-ads",
+      ".footer-ads"
+    ],
+    "preserveStructure": true,
+    "extractCode": true,
+    "extractImages": true,
+    "extractLinks": true,
+    "minContentLength": 100
+  },
+  "crawling": {
+    "followInternalLinks": true,
+    "maxDepth": 3,
+    "respectRobotsTxt": true,
+    "delay": 1000,
+    "maxPages": 100
+  },
+  "output": {
+    "format": "markdown",
+    "includeMetadata": true,
+    "includeTimestamp": true,
+    "generateToc": true
+  }
+}

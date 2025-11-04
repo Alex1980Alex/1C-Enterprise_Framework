@@ -1,0 +1,74 @@
+{
+  "server": {
+    "name": "universal-web-scraper",
+    "version": "1.0.0",
+    "description": "Universal web scraper with intelligent site detection and MCP integrations",
+    "author": "Claude Framework Team",
+    "port": 3000,
+    "timeout": 30000,
+    "maxConcurrency": 5,
+    "retryAttempts": 3,
+    "retryDelay": 1000
+  },
+  "browser": {
+    "headless": true,
+    "defaultTimeout": 30000,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    "viewport": {
+      "width": 1920,
+      "height": 1080
+    },
+    "waitForNetworkIdle": true,
+    "screenshots": {
+      "enabled": false,
+      "path": "./cache/screenshots/"
+    }
+  },
+  "cache": {
+    "enabled": true,
+    "ttl": 3600,
+    "maxSize": "500MB",
+    "cleanupInterval": 86400,
+    "compressionEnabled": true
+  },
+  "integrations": {
+    "memoryMcp": {
+      "enabled": true,
+      "autoSave": true,
+      "batchSize": 10
+    },
+    "doclingMcp": {
+      "enabled": true,
+      "supportedFormats": [".pdf", ".docx", ".doc", ".pptx", ".ppt", ".xlsx", ".xls"],
+      "ocrEnabled": true,
+      "extractImages": true
+    },
+    "sqliteCache": {
+      "enabled": true,
+      "databasePath": "./cache/scraper_cache.db",
+      "maxEntries": 10000,
+      "compressionLevel": 6
+    }
+  },
+  "logging": {
+    "level": "info",
+    "file": "./logs/scraper.log",
+    "maxFileSize": "10MB",
+    "maxFiles": 5,
+    "console": true,
+    "timestamp": true
+  },
+  "rateLimit": {
+    "enabled": true,
+    "requestsPerSecond": 2,
+    "burstLimit": 10,
+    "respectRobotsTxt": true
+  },
+  "security": {
+    "allowedDomains": [],
+    "blockedDomains": [],
+    "validateSSL": true,
+    "maxRedirects": 5,
+    "maxResponseSize": "50MB"
+  }
+}

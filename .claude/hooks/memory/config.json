@@ -1,0 +1,28 @@
+{
+  "enabled": true,
+  "auto_save_tools": [
+    "Read",
+    "Grep",
+    "Glob",
+    "WebFetch",
+    "WebSearch",
+    "mcp__github__",
+    "mcp__1c",
+    "Task",
+    "mcp__serena__find_symbol",
+    "mcp__serena__get_symbols_overview",
+    "mcp__serena__search_for_pattern"
+  ],
+  "min_content_length": 250,
+  "save_to_timescale": true,
+  "save_to_knowledge_graph": true,
+  "log_file": "auto-save.log",
+  "verbose": true,
+  "auto_rotation": {
+    "enabled": true,
+    "check_interval": 10,
+    "max_log_size_mb": 5,
+    "max_jsonl_size_mb": 10,
+    "max_archives": 5
+  }
+}

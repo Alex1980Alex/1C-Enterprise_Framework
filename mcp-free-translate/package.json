@@ -1,0 +1,16 @@
+{
+  "name": "mcp-free-translate",
+  "version": "1.0.0",
+  "description": "Free MCP server for Google Translate without API keys",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@vitalets/google-translate-api": "^9.2.1"
+  },
+  "author": "Claude Framework",
+  "license": "MIT"
+}

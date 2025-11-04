@@ -1,0 +1,83 @@
+{
+  "adapter": "generic",
+  "description": "Универсальный адаптер для любых сайтов",
+  "patterns": {
+    "domains": ["*"],
+    "urls": ["*"],
+    "indicators": ["content", "text", "article", "main"]
+  },
+  "selectors": {
+    "title": [
+      "h1",
+      "title",
+      ".title",
+      ".heading",
+      ".page-title"
+    ],
+    "content": [
+      "main",
+      ".content",
+      ".main-content",
+      "article",
+      ".article",
+      ".post",
+      ".page-content",
+      "#content",
+      "#main"
+    ],
+    "navigation": [
+      "nav",
+      ".navigation",
+      ".menu",
+      ".nav"
+    ],
+    "sidebar": [
+      ".sidebar",
+      ".aside",
+      "aside"
+    ],
+    "footer": [
+      "footer",
+      ".footer"
+    ]
+  },
+  "extraction": {
+    "removeElements": [
+      "script",
+      "style",
+      "noscript",
+      ".advertisement",
+      ".ads",
+      ".popup",
+      ".modal"
+    ],
+    "preserveStructure": false,
+    "extractCode": false,
+    "extractImages": false,
+    "extractLinks": true,
+    "minContentLength": 100,
+    "cleanText": true,
+    "removeEmptyElements": true
+  },
+  "crawling": {
+    "followInternalLinks": false,
+    "maxDepth": 1,
+    "respectRobotsTxt": true,
+    "delay": 1000,
+    "maxPages": 1,
+    "singlePage": true
+  },
+  "output": {
+    "format": "markdown",
+    "includeMetadata": false,
+    "includeTimestamp": true,
+    "generateToc": false,
+    "minimalOutput": true
+  },
+  "fallback": {
+    "enabled": true,
+    "useReadability": true,
+    "extractMainContent": true,
+    "useHeuristics": true
+  }
+}

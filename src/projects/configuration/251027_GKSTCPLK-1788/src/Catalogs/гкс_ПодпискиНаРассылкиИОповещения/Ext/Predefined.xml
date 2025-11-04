@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<PredefinedData xmlns="http://v8.1c.ru/8.3/xcf/predef" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CatalogPredefinedItems" version="2.19">
+	<Item id="e7fef1f3-8935-492c-bf20-38feb77bb4fb">
+		<Name>НедоступностьИБ</Name>
+		<Code/>
+		<Description>Недоступность информационной базы</Description>
+		<IsFolder>false</IsFolder>
+	</Item>
+	<Item id="0aa7e4d4-0998-4b88-9eb6-e134f6fe40de">
+		<Name>НесоответствиеВесаГруза</Name>
+		<Code/>
+		<Description>Оповещение о несоответствии веса груза</Description>
+		<IsFolder>false</IsFolder>
+	</Item>
+	<Item id="680fc34b-3277-4eb5-8c7f-449f9048ae60">
+		<Name>ПревышениеРазрешеннойМаксивальнойМассы</Name>
+		<Code/>
+		<Description>Превышение разрешенной максивальной массы</Description>
+		<IsFolder>false</IsFolder>
+	</Item>
+</PredefinedData>

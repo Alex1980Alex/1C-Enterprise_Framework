@@ -1,0 +1,41 @@
+apiVersion: 1
+
+datasources:
+  # Prometheus
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090
+    isDefault: true
+    editable: true
+    jsonData:
+      timeInterval: "15s"
+      queryTimeout: "60s"
+      httpMethod: "POST"
+
+  # TimescaleDB (PostgreSQL)
+  - name: TimescaleDB
+    type: postgres
+    access: proxy
+    url: timescaledb:5432
+    database: ai_memory
+    user: ai_user
+    secureJsonData:
+      password: 'ai_memory_secure_2025'
+    jsonData:
+      sslmode: 'disable'
+      postgresVersion: 1400
+      timescaledb: true
+    editable: true
+
+  # Redis
+  - name: Redis
+    type: redis-datasource
+    access: proxy
+    url: redis://redis:6379
+    jsonData:
+      client: standalone
+      timeout: 10
+    secureJsonData:
+      password: 'redis_secure_2025'
+    editable: true

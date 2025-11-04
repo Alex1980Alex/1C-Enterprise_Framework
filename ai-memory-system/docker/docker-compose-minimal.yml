@@ -1,0 +1,48 @@
+version: '3.8'
+
+networks:
+  ai-memory-net:
+    driver: bridge
+
+volumes:
+  qdrant-data:
+    driver: local
+  redis-data:
+    driver: local
+
+services:
+  # Qdrant Vector Database (Critical for BSL search)
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: 1c-qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant-data:/qdrant/storage
+    networks:
+      - ai-memory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:6333/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis Cache Layer (Critical for performance)
+  redis:
+    image: redis:7-alpine
+    container_name: 1c-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --maxmemory ${REDIS_MAX_MEMORY:-2gb} --maxmemory-policy ${REDIS_MAX_MEMORY_POLICY:-allkeys-lru}
+    volumes:
+      - redis-data:/data
+    networks:
+      - ai-memory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

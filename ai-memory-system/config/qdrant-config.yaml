@@ -1,0 +1,23 @@
+service:
+  http_port: 6333
+  grpc_port: 6334
+
+storage:
+  # Storage path for collections
+  storage_path: /qdrant/storage
+
+  # Optimize for memory usage
+  on_disk_payload: true
+
+  # Performance tuning
+  wal:
+    wal_capacity_mb: 32
+    wal_segments_ahead: 0
+
+telemetry:
+  disabled: true
+
+cluster:
+  enabled: false
+
+log_level: INFO

@@ -1,0 +1,31 @@
+{
+  "ollama": {
+    "url": "http://localhost:11434",
+    "reranking_model": "deepseek-coder:6.7b",
+    "generation_model": "deepseek-coder:6.7b",
+    "timeout": 180
+  },
+  "qdrant": {
+    "host": "localhost",
+    "port": 6333,
+    "collection": "bsl_code_v2"
+  },
+  "neo4j": {
+    "uri": "bolt://localhost:7687",
+    "user": "neo4j",
+    "password": "password"
+  },
+  "search": {
+    "default_limit": 10,
+    "max_limit": 50,
+    "min_relevance": 0.5
+  },
+  "cache": {
+    "ttl_seconds": 300,
+    "max_entries": 1000
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "../logs/mcp_server.log"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "free-translate": {
+      "command": "node",
+      "args": ["D:/1C-Enterprise_Framework/mcp-free-translate/index.js"]
+    }
+  }
+}

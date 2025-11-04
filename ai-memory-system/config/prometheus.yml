@@ -1,0 +1,50 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    project: '1c-enterprise-framework'
+    environment: 'development'
+
+scrape_configs:
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Qdrant metrics
+  - job_name: 'qdrant'
+    static_configs:
+      - targets: ['qdrant:6333']
+    metrics_path: '/metrics'
+
+  # TimescaleDB postgres_exporter
+  - job_name: 'timescaledb'
+    static_configs:
+      - targets: ['timescaledb:9187']
+    metrics_path: '/metrics'
+
+  # Neo4j metrics (if enabled)
+  - job_name: 'neo4j'
+    static_configs:
+      - targets: ['neo4j:2004']
+    metrics_path: '/metrics'
+
+  # Redis metrics (via redis_exporter)
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+
+  # FastAPI application (to be added later)
+  - job_name: 'fastapi'
+    static_configs:
+      - targets: ['context-manager:8000']
+    metrics_path: '/metrics'
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+          # - 'alertmanager:9093'
+
+rule_files:
+  # - "alerts/*.yml"

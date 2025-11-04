@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<PredefinedData xmlns="http://v8.1c.ru/8.3/xcf/predef" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CatalogPredefinedItems" version="2.19">
+	<Item id="15cd96d8-c914-4f91-be0b-388bf5e84299">
+		<Name>ДанныеMFM</Name>
+		<Code>000000009</Code>
+		<Description>Данные MFM</Description>
+		<IsFolder>false</IsFolder>
+		<ChildItems>
+			<Item id="c6d79aac-8cac-4e2b-8926-bfb4030eea3b">
+				<Name>ping</Name>
+				<Code>000000010</Code>
+				<Description>Ping</Description>
+				<IsFolder>false</IsFolder>
+			</Item>
+			<Item id="83327798-9311-4df4-a106-475cade80409">
+				<Name>BalanceWarehouses</Name>
+				<Code>000000011</Code>
+				<Description>Остатки на складах</Description>
+				<IsFolder>false</IsFolder>
+			</Item>
+		</ChildItems>
+	</Item>
+	<Item id="3ccf0ab3-29bb-458a-8aaa-6ffa23bb7f5b">
+		<Name>ДанныеWarehouse</Name>
+		<Code>000000001</Code>
+		<Description>Данные Warehouse</Description>
+		<IsFolder>false</IsFolder>
+		<ChildItems>
+			<Item id="1b0cf072-3c77-41a4-b433-ada1bf11a1e3">
+				<Name>GetBetweenUpdDatesFilteredByClientIdOrStation</Name>
+				<Code>000000003</Code>
+				<Description>Внешние пробы по дате изменения, клиенту или станции назначения</Description>
+				<IsFolder>false</IsFolder>
+			</Item>
+			<Item id="22e41e2c-3cc8-4e00-b69b-84911d7ed4d9">
+				<Name>ExternalSamplesGetBetweenDates</Name>
+				<Code>000000002</Code>
+				<Description>Внешние пробы по периоду</Description>
+				<IsFolder>false</IsFolder>
+			</Item>
+			<Item id="447fe6bb-637c-4e6c-95a1-3b1ddd5009e9">
+				<Name>QualityIndicators</Name>
+				<Code>000000004</Code>
+				<Description>Все качественные показатели </Description>
+				<IsFolder>false</IsFolder>
+			</Item>
+			<Item id="92bf64fb-1ad1-449d-83a0-5dd7634b8901">
+				<Name>UnitsById</Name>
+				<Code>000000007</Code>
+				<Description>Единица измерения по идентификатору</Description>
+				<IsFolder>false</IsFolder>
+			</Item>
+			<Item id="876698f5-907c-45bf-ae4c-7a869db22413">
+				<Name>QualityIndicatorsGetUsed</Name>
+				<Code>000000005</Code>
+				<Description>Используемые качественные показатели </Description>
+				<IsFolder>false</IsFolder>
+			</Item>
+			<Item id="2cd02bba-d4c2-44d7-a4a7-7a8b8e6a49e9">
+				<Name>QualityIndicatorCodes</Name>
+				<Code>000000006</Code>
+				<Description>Маппинг показателей качества (с внешними)</Description>
+				<IsFolder>false</IsFolder>
+			</Item>
+			<Item id="5f14f241-4e4e-4662-88bf-194a4d328705">
+				<Name>Goods</Name>
+				<Code>000000008</Code>
+				<Description>Продукция</Description>
+				<IsFolder>false</IsFolder>
+			</Item>
+		</ChildItems>
+	</Item>
+</PredefinedData>

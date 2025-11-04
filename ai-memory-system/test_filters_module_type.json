@@ -1,0 +1,5 @@
+{
+  "query": "документ",
+  "top_k": 3,
+  "module_types": ["Object"]
+}

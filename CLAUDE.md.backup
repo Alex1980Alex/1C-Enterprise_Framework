@@ -1,0 +1,1042 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## 🎯 ЧТО РАБОТАЕТ СЕЙЧАС
+
+### ✅ **Готовые инструменты:**
+- **BSL Language Server**: `python -m sonar_integration analyze` - анализ качества кода
+- **MCP Reasoner v2.0.0**: глубокий анализ кода с MCTS и Beam Search
+- **BSL Semantic Diff v0.2.0**: `python scripts/bsl-semantic-diff/semantic_diff_poc.py` - семантическое сравнение BSL
+- **Task Master v0.26.0**: `cd claude-task-master && npx task-master list` - управление задачами
+- **🆕 Universal Web Scraper MCP v1.0**: интеллектуальный парсинг любых веб-сайтов с 5 адаптерами (documentation, news, its_1c, ecommerce, generic)
+- **🆕 Docling Integration v1.0**: `python scripts/mcp-integration/docling-workflow.py` - конвертация документов (PDF, DOCX, PPTX) в Markdown для RAG и Knowledge Graph
+- **🆕 Universal Documentation Parser v2.0**: `scripts/1c-docs-parser/universal-documentation-parser.py` - универсальный парсер для ЛЮБЫХ документационных сайтов (1C, GitHub Docs, MDN, React, Django) с автоматическим определением типа сайта
+- **Git hooks**: автоматическая проверка кода при коммитах
+- **VS Code/Cursor**: горячие клавиши для анализа (Ctrl+Shift+B)
+- **CI/CD**: GitHub Actions с автоматическими проверками качества кода
+
+## 🚀 БЫСТРЫЙ СТАРТ
+
+### **Анализ качества кода 1С:**
+
+**⚡ Автоматический полный анализ (РЕКОМЕНДУЕТСЯ):**
+```bash
+# Полный цикл: BSL + Serena + Reasoner + Memory
+python scripts/mcp-integration/full-analysis-pipeline.py \
+  --input "path/to/module.bsl" \
+  --output "reports/analysis" \
+  --use-reasoner \
+  --save-to-memory
+```
+
+**🧠 MCP Reasoner для сложного анализа:**
+```bash
+# Подготовка задачи для глубокого анализа
+python scripts/mcp-integration/bsl-reasoner-integration.py "path/to/module.bsl"
+
+# В Claude Desktop с MCP Reasoner:
+# "Проанализируй задачу из cache/reasoner-task.json используя MCTS стратегию"
+```
+
+**Или по шагам:**
+```bash
+# 1. Быстрый BSL анализ
+python -m sonar_integration analyze --src-dir . --quick
+
+# 2. Полный анализ с отчётом
+python -m sonar_integration analyze --src-dir .
+python -m sonar_integration report analysis.json --html
+```
+
+### **Семантическое сравнение и анализ BSL:**
+```bash
+# АНАЛИЗ: Структура одного BSL модуля (НОВОЕ!)
+python scripts/bsl-semantic-diff/semantic_diff_poc.py module.bsl --analyze-only
+
+# АНАЛИЗ: Метаданные конфигурации (НОВОЕ!)
+python scripts/bsl-semantic-diff/metadata_analyzer.py config_dir --export-json
+
+# АНАЛИЗ: Полный архитектурный обзор (НОВОЕ!)
+python scripts/bsl-semantic-diff/compare-configs.py config --analyze-architecture
+
+# СРАВНЕНИЕ: Два BSL файла
+python scripts/bsl-semantic-diff/semantic_diff_poc.py file1.bsl file2.bsl
+
+# СРАВНЕНИЕ: Конфигурации + метаданные
+python scripts/bsl-semantic-diff/compare-configs.py config1 config2 report.txt --metadata
+```
+
+### **Управление задачами:**
+```bash
+cd claude-task-master
+npx task-master list              # Просмотр задач
+npx task-master next              # Следующая задача
+npx task-master tags              # Управление тегами
+```
+
+### **Конвертация документов (Docling MCP):**
+```bash
+# Конвертация PDF/DOCX в Markdown
+python scripts/mcp-integration/docling-workflow.py --input "document.pdf" --output "cache/docling-output/"
+
+# Пакетная обработка документов
+python scripts/mcp-integration/docling-workflow.py --batch --input-dir "docs/" --output-dir "cache/markdown/"
+
+# Интеграция с Memory MCP
+python scripts/mcp-integration/docling-memory-integration.py --source "reports/" --save-to-graph
+```
+
+### **Универсальный парсинг документации:**
+```bash
+# УНИВЕРСАЛЬНЫЙ ПАРСЕР - работает с ЛЮБЫМИ документационными сайтами!
+# Автоматически определяет тип сайта и применяет оптимальную стратегию
+
+# 1C документация (its.1c.ru)
+python scripts/1c-docs-parser/universal-documentation-parser.py \
+  "https://its.1c.ru/db/v8326doc" \
+  --max-pages 50 --format markdown
+
+# GitHub документация
+python scripts/1c-docs-parser/universal-documentation-parser.py \
+  "https://docs.github.com/en/get-started" \
+  --max-pages 20 --format json
+
+# MDN Web Docs
+python scripts/1c-docs-parser/universal-documentation-parser.py \
+  "https://developer.mozilla.org/en-US/docs/Web/JavaScript" \
+  --max-pages 30
+
+# React документация
+python scripts/1c-docs-parser/universal-documentation-parser.py \
+  "https://react.dev/learn" \
+  --max-pages 25
+
+# Django документация
+python scripts/1c-docs-parser/universal-documentation-parser.py \
+  "https://docs.djangoproject.com/en/stable/" \
+  --max-pages 40
+
+# Любой другой документационный сайт (автоопределение)
+python scripts/1c-docs-parser/universal-documentation-parser.py \
+  "https://любой-сайт-документации.com" \
+  --max-pages 15
+```
+
+### **Веб-парсинг (Universal Web Scraper MCP):**
+```bash
+# Парсинг любого веб-сайта с автоматическим определением типа
+# В Claude Desktop или через MCP команды:
+
+# Парсинг документационных сайтов
+mcp__universal-web-scraper__scrape_website({
+  "url": "https://docs.1c.ru/article",
+  "adapter_type": "documentation",
+  "include_links": true,
+  "save_to_memory": true
+})
+
+# Парсинг новостных сайтов
+mcp__universal-web-scraper__scrape_website({
+  "url": "https://habr.com/ru/articles/",
+  "adapter_type": "news",
+  "max_depth": 2
+})
+
+# Специализированный парсинг ITS 1C
+mcp__universal-web-scraper__scrape_website({
+  "url": "https://its.1c.ru/db/metod8dev",
+  "adapter_type": "its_1c",
+  "include_images": true
+})
+
+# Пакетный парсинг нескольких сайтов
+mcp__universal-web-scraper__bulk_scrape_websites({
+  "urls": ["site1.com", "site2.com", "site3.com"],
+  "concurrent_limit": 3,
+  "delay_between_requests": 2
+})
+```
+
+### **Парсинг документации 1С:**
+```bash
+# Универсальный парсер документации с портала its.1c.ru
+cd scripts/1c-docs-parser
+
+# Парсинг одной главы
+python automated-parser.py 3  # Глава 3
+
+# Парсинг всей документации
+python automated-parser.py
+
+# Использование через JavaScript функции
+node -e "
+const parser = require('./universal-functions.js');
+// Полный workflow парсинга с сохранением структуры
+"
+```
+
+### **Валидация проекта:**
+```bash
+bash scripts/validate-project.sh    # Полная проверка проекта
+bash scripts/setup-environment.sh   # Проверка окружения
+```
+
+## 🏗️ Repository Overview
+
+This is a **1C Enterprise Framework** - a professional framework for developing 1C:Enterprise applications using Claude Code. The repository contains rules, standards, and automation for efficient 1C configuration development.
+
+**Important:** This is a FRAMEWORK repository with documentation, rules, and development tools - NOT a 1C configuration with .bsl files.
+
+
+## 📂 Framework Structure
+
+### **Working Components:**
+- **`cursor-rules/`**: Modules of AI rules and development guidelines
+- **`claude-task-master/`**: Task Master v0.26.0 with 93 tasks + 535 subtasks
+- **`sonar_integration/`**: BSL Language Server integration for code quality
+- **`scripts/`**: Automation scripts and project validation
+- **`mcp-universal-scraper/`**: Universal Web Scraper MCP server with 5 intelligent adapters
+- **`scripts/1c-docs-parser/`**: Specialized parser for 1C documentation with structure preservation
+- **`Документация по фреймворку/`**: Complete framework documentation
+- **`.git/hooks/`**: Git hooks for automatic code validation
+
+### **Key Files:**
+- **`.claude-unified-rules.md`**: Combined rules from all cursor-rules modules
+- **`.claude/file-organization-rules.md`**: ОБЯЗАТЕЛЬНЫЕ правила организации файлов
+- **`.vscode/tasks.json`**: VS Code/Cursor integration with hotkeys
+- **`scripts/bsl-aliases.sh`**: Quick BSL analysis commands
+
+## 🔧 BSL Language Server Integration
+
+При работе с кодом 1С используй BSL Language Server для анализа качества:
+
+### **Анализ текущего файла:**
+```bash
+python -m sonar_integration analyze --src-dir Module.bsl --quick
+```
+
+### **Полный анализ проекта:**
+```bash
+python -m sonar_integration analyze --src-dir src/ --output-dir reports/
+```
+
+### **Анализ конкретной папки:**
+```bash
+python -m sonar_integration analyze --src-dir "src/projects/configuration/CommonModules/" --output-dir reports/
+```
+
+### **Генерация отчётов (все форматы):**
+```bash
+python -m sonar_integration report reports/analysis.json --html --excel --csv
+```
+
+### **Практические примеры использования:**
+```bash
+# Быстрая проверка одного модуля
+python -m sonar_integration analyze --src-dir "ОбщийМодуль.bsl" --quick
+
+# Анализ всех общих модулей
+python -m sonar_integration analyze --src-dir "src/projects/configuration/CommonModules/"
+
+# Анализ с фильтрацией по критичности
+python -m sonar_integration analyze --src-dir . --severity CRITICAL,BLOCKER
+
+# Создание HTML отчёта и автоматическое открытие
+python -m sonar_integration report analysis.json --html && start reports/report.html
+```
+
+### **При обнаружении ошибок:**
+- Автоматически предлагай исправления
+- Ссылайся на конкретные правила из `sonar_integration/rules/bsl_rules_catalog.json`
+- Используй уровни критичности: BLOCKER > CRITICAL > MAJOR > MINOR > INFO
+
+### **VS Code/Cursor горячие клавиши:**
+- `Ctrl+Shift+B` - анализ текущего файла
+- `Ctrl+Alt+B` - полный анализ проекта
+- `Ctrl+Shift+Alt+B` - генерация HTML отчёта
+
+## 📋 Development Guidelines
+
+### **Information Priority:**
+1. **PRIMARY**: Documents from "Сценарий разработки" (organizational processes)
+2. **SECONDARY**: Official 1C:Enterprise documentation from "Документация разработчика"
+3. **SUPPLEMENTARY**: External sources and internet research when needed
+
+### **Quality Practices:**
+1. **BSL Validation**: Always run `python -m sonar_integration analyze` before commits
+2. **Documentation**: Reference official 1C documentation when applicable
+3. **File Management**: Follow `.claude/file-organization-rules.md` СТРОГО
+4. **Version Control**: Git hooks automatically validate code quality
+5. **Testing**: Use Task Master for systematic development approach
+
+### **Response Guidelines:**
+**For technical 1C questions, include:**
+1. **📖 REFERENCE**: Quote from official documentation when relevant
+2. **🔧 EXPLANATION**: Technical explanation using 1C terminology
+3. **💡 PRACTICAL ADVICE**: Actionable implementation guidance
+4. **✅ VALIDATION**: BSL quality checks and best practices
+
+## 🔧 MCP Priority Rules - Автоматический выбор инструментов
+
+**ВАЖНО:** Всегда следуй правилам приоритизации инструментов из [.claude/mcp-priority-rules.md](.claude/mcp-priority-rules.md)
+
+**Основной принцип:**
+> **Семантические операции → MCP серверы**
+> **Текстовые операции → Стандартные инструменты**
+
+### **Быстрая справка по выбору инструмента:**
+
+| Задача | Использовать MCP | Fallback |
+|--------|------------------|----------|
+| **Обзор структуры BSL файла** | `mcp__ast-grep-mcp__ast_grep` ⭐ | `mcp__serena__get_symbols_overview` |
+| **Поиск функции/процедуры BSL** | `mcp__ast-grep-mcp__ast_grep` ⭐ | `mcp__serena__find_symbol` |
+| **Где используется функция** | `mcp__serena__find_referencing_symbols` | `Grep` |
+| **Замена тела функции** | `mcp__serena__replace_symbol_body` | `Edit` |
+| **Добавить новую функцию** | `mcp__serena__insert_after_symbol` | `Edit` |
+| **Поиск паттерна в BSL коде** | `mcp__serena__search_for_pattern` | `Grep` |
+| **Поиск в документации фреймворка** | `mcp__1c-framework-docs__search_docs` | — |
+| **Парсинг ITS/веб-сайтов** | `mcp__universal-web-scraper__scrape_website` | — |
+| **Конвертация PDF/DOCX в Markdown** | `mcp__docling__convert_document` | — |
+| **Сохранение знаний о проекте** | `mcp__memory__create_entities` | `Write` |
+| **Сложный многоступенчатый анализ** | `mcp__sequential-thinking__sequentialthinking` | — |
+| **AST структурный поиск BSL** | `mcp__ast-grep-mcp__ast_grep` | — |
+| **Чтение 10-20 строк** | `Read` | — |
+| **Замена 1-2 строк** | `Edit` | — |
+| **Git/системные команды** | `Bash` | — |
+
+> **🔴 ОБЯЗАТЕЛЬНОЕ ПРАВИЛО для BSL файлов:**
+>
+> **ВСЕГДА используй `mcp__ast-grep-mcp__ast_grep` для анализа структуры BSL файлов** (⭐ в таблице выше)
+>
+> **Почему:**
+> - BSL Language Server часто НЕ видит функции из-за сложного синтаксиса (многострочные запросы с `|`)
+> - AST-grep работает ВСЕГДА, даже если проект не зарегистрирован в Serena
+> - Проверено и надежно работает
+>
+> **Примеры обязательного использования:**
+> ```javascript
+> // ✅ ПРАВИЛЬНО - Найти все функции
+> mcp__ast-grep-mcp__ast_grep({
+>   pattern: "Функция $NAME($$$ARGS)",
+>   path: "src/path/to/module.bsl",
+>   bsl_type: "functions"
+> })
+>
+> // ✅ ПРАВИЛЬНО - Найти все процедуры
+> mcp__ast-grep-mcp__ast_grep({
+>   pattern: "Процедура $NAME($$$ARGS)",
+>   path: "src",
+>   bsl_type: "procedures"
+> })
+>
+> // ✅ ПРАВИЛЬНО - Только экспортные
+> mcp__ast-grep-mcp__ast_grep({
+>   pattern: "Функция $NAME($$$ARGS)",
+>   export_only: true,
+>   path: "src"
+> })
+> ```
+>
+> **Настройка проектов для Serena:** [.claude/serena-project-setup-guide.md](.claude/serena-project-setup-guide.md)
+
+### **Примеры использования MCP:**
+
+#### 📊 **Анализ структуры BSL модуля (⭐ РЕКОМЕНДУЕТСЯ):**
+```javascript
+// ПРИОРИТЕТ 1: AST-grep - всегда работает
+mcp__ast-grep-mcp__ast_grep({
+  pattern: "Функция $NAME($$$ARGS)",
+  path: "src/DataProcessors/Module/Ext/ObjectModule.bsl",
+  bsl_type: "functions"
+})
+```
+
+#### 🔍 **Поиск процедуры/функции по имени (⭐ РЕКОМЕНДУЕТСЯ):**
+```javascript
+// ПРИОРИТЕТ 1: AST-grep с паттерном имени
+mcp__ast-grep-mcp__ast_grep({
+  pattern: "Функция ПроверитьСовпадениеДанныхСПервойСтрокой($$$ARGS)",
+  path: "Forms/Форма/Ext/Form/Module.bsl",
+  bsl_type: "functions"
+})
+
+// Альтернатива: Serena (если проект зарегистрирован)
+mcp__serena__find_symbol({
+  name_path: "ПроверитьСовпадениеДанныхСПервойСтрокой",
+  relative_path: "Forms/Форма/Ext/Form/Module.bsl",
+  include_body: true
+})
+```
+
+#### 🔗 **Анализ зависимостей:**
+```javascript
+mcp__serena__find_referencing_symbols({
+  name_path: "ЗаполнитьСписокПроизвольныйКомпозит",
+  relative_path: "Ext/ObjectModule.bsl"
+})
+```
+
+#### ✏️ **Замена тела функции:**
+```javascript
+mcp__serena__replace_symbol_body({
+  name_path: "ФункцияДляЗамены",
+  relative_path: "Module.bsl",
+  body: "// Новое тело функции\n..."
+})
+```
+
+#### 📚 **Поиск в документации:**
+```javascript
+mcp__1c-framework-docs__search_docs({
+  query: "регистр сведений композитные пробы",
+  search_type: "hybrid",
+  limit: 5
+})
+```
+
+#### 🌐 **Парсинг ITS портала:**
+```javascript
+mcp__universal-web-scraper__scrape_website({
+  url: "https://its.1c.ru/db/metod8dev",
+  adapter_type: "its_1c",
+  save_to_memory: true
+})
+```
+
+#### 💾 **Сохранение знаний в Knowledge Graph:**
+```javascript
+mcp__memory__create_entities([{
+  name: "Обработка.гкс_АРМПромежуточныйКомпозит",
+  entityType: "1c_dataprocessor",
+  observations: ["Формирует композитные пробы", "Использует фильтры"]
+}])
+```
+
+### **🔄 Workflow примеры:**
+
+**Рефакторинг процедуры:**
+1. `serena__find_symbol` → найти процедуру
+2. `serena__find_referencing_symbols` → где используется
+3. `sequential-thinking` → спланировать изменения
+4. `serena__replace_symbol_body` → заменить тело
+5. `memory__create_entities` → задокументировать
+
+**Анализ новой конфигурации:**
+1. `serena__get_symbols_overview` → обзор модулей
+2. `1c-framework-docs__search_docs` → изучить документацию
+3. `memory__create_entities` → создать Knowledge Graph
+
+**Полная документация:** [.claude/mcp-priority-rules.md](.claude/mcp-priority-rules.md)
+
+## 🛠️ Git Workflow (Automated)
+
+### **Standard workflow with automatic validation:**
+```bash
+git checkout -b feature/task-description
+# Make changes - Git hooks will automatically run BSL analysis
+git add .
+git commit -m "feat: description
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
+```
+
+**Git hooks automatically:**
+- Run BSL Language Server analysis on changed .bsl files
+- Block commits if BLOCKER or CRITICAL issues found
+- Provide detailed error reports
+
+## 🎯 Task Master Integration
+
+**Task Master AI provides intelligent task management for 1C projects.**
+
+### **Basic commands:**
+```bash
+cd claude-task-master
+
+# Task management
+npx task-master list                    # All tasks (93 tasks available)
+npx task-master next                    # Next recommended task
+npx task-master view <id>               # Task details
+npx task-master show 1                  # Show task #1
+
+# Task analysis and filtering
+npx task-master tags                    # Tag management (3 tags available)
+npx task-master list --tag master       # Filter by tag
+npx task-master models                  # AI model configuration
+npx task-master status                  # Project status overview
+```
+
+### **💡 Practical Task Master Examples:**
+```bash
+# View all available tasks
+npx task-master list --all
+
+# Work with specific tags
+npx task-master tags --show-metadata    # Show all tags with metadata
+npx task-master list --tag cc-kiro-hooks # Show tasks for specific workflow
+
+# Model management (Google AI configured)
+npx task-master models --list           # Show configured models
+npx task-master research "1С best practices" # Use research model
+
+# Task completion workflow
+npx task-master next                    # Get next task
+npx task-master show <id>               # Study task details  
+npx task-master mark-complete <id>      # Mark as completed
+
+# Integration with 1C development
+npx task-master add-task --title "Analyze BSL module" --description "Review CommonModule for quality issues"
+npx task-master parse-from-text "Create 1C report form with data composition schema"
+```
+
+**For detailed Task Master workflows, the system references `.taskmaster/CLAUDE.md`**
+
+## 📊 Technical Context
+
+- **Platform**: 1C:Enterprise 8.3+ (latest stable version recommended)
+- **AI Tools**: Claude Code with intelligent automation
+- **Language**: 1C built-in language (BSL) with Language Server validation
+- **Architecture**: Client-server, file mode, web applications, mobile apps
+- **Quality Tools**: BSL Language Server (793 rules), automated Git hooks
+- **Task Management**: Task Master AI v0.26.0 with Google AI integration
+
+## 🚀 Framework Tools Status
+
+### **✅ Fully Working (Ready to use):**
+- **BSL Language Server**: 80% integration through sonar_integration
+- **Task Master AI**: 85% ready with 93 tasks configured
+- **Development Automation**: 95% - intelligent code analysis and guidance
+- **Git Automation**: 90% - hooks and validation working
+- **Documentation**: 95% - comprehensive and accurate
+- **AST-grep для BSL**: 96% - полная интеграция с MCP и tree-sitter
+
+### **⚠️ Partially Working:**
+- **MCP Servers**: Basic filesystem and GitHub operations
+
+### **✅ CI/CD Integration (ГОТОВО - 27.09.2025):**
+- **GitHub Actions workflows** для автоматической проверки качества кода
+- **Автоматические комментарии в PR** с результатами BSL анализа
+- **Ежедневные отчёты качества** через GitHub Issues
+- **Блокировка PR** при наличии BLOCKER ошибок
+
+**Документация:** `.github/workflows/README.md`
+
+## 🔗 MCP Integration Details
+
+### **✅ Working MCP Commands:**
+```javascript
+// Filesystem operations (РАБОТАЕТ)
+mcp__filesystem__read_text_file("/path/to/file.bsl")
+mcp__filesystem__write_file("/path/to/file.bsl", content)
+mcp__filesystem__list_directory("/src/projects/configuration/CommonModules/")
+
+// GitHub integration (РАБОТАЕТ)
+mcp__github__get_file_contents("owner", "repo", "path/to/file.bsl")
+mcp__github__create_pull_request(...)
+
+// Memory system (РАБОТАЕТ)
+mcp__memory__create_entities([{name: "ModuleAnalysis", type: "analysis", ...}])
+mcp__memory__search_nodes("1C module patterns")
+```
+
+### **✅ NEW: MCP Reasoner Integration v2.0.0 (ГОТОВО - 12.10.2025)**
+
+> **Статус:** Полностью интегрирован и готов к production использованию  
+> **Версия:** 2.0.0  
+> **Время внедрения:** 12 октября 2025  
+
+#### **🚀 Быстрый старт:**
+```bash
+# Полный анализ модуля 1С с MCP Reasoner
+python scripts/mcp-integration/full-analysis-pipeline.py \
+  --input "path/to/ObjectModule.bsl" \
+  --output "reports/analysis" \
+  --use-reasoner \
+  --save-to-memory
+
+# Интеграция BSL + Reasoner
+python scripts/mcp-integration/bsl-reasoner-integration.py "path/to/module.bsl"
+```
+
+#### **🧠 Доступные стратегии анализа:**
+- **Beam Search**: быстрый анализ простых проблем (30 сек - 2 мин)
+- **MCTS (Monte Carlo Tree Search)**: глубокий анализ сложных задач (2-10 мин)
+
+#### **📊 Возможности анализа:**
+- Архитектурный анализ (циклы, зависимости, "божественные объекты")
+- Анализ производительности (запросы в циклах, сложность O(n))
+- Поиск дублирующегося кода
+- Оценка соответствия best practices 1С
+
+#### **📋 Практические сценарии:**
+1. **Анализ проведения документа** - `scripts/mcp-integration/scenarios/01-document-posting-analysis.md`
+2. **Поиск дублирующегося кода** - `scripts/mcp-integration/scenarios/02-duplicate-code-analysis.md`
+3. **Граф зависимостей конфигурации** - `scripts/mcp-integration/scenarios/03-dependency-graph-analysis.md`
+
+#### **⚙️ Конфигурация Claude Desktop:**
+```json
+{
+  "mcpServers": {
+    "mcp-reasoner": {
+      "command": "node",
+      "args": ["D:/1C-Enterprise_Framework/mcp-reasoner/dist/index.js"],
+      "env": {
+        "MAX_REASONING_DEPTH": "10",
+        "SEARCH_STRATEGY": "mcts",
+        "CACHE_ENABLED": "true"
+      }
+    }
+  }
+}
+```
+
+#### **📈 Метрики эффективности:**
+- **Точность:** 85-92% (в зависимости от сложности кода)
+- **False positives:** < 10%
+- **Покрытие проблем:** 90-95%
+- **Время анализа:** от 30 секунд до 15 минут
+
+**📚 Документация:** `docs/mcp-reasoner/README.md`
+
+### **✅ NEW: Docling MCP Integration v1.0 (ГОТОВО - 22.10.2025)**
+
+> **Статус:** Полностью интегрирован и готов к production использованию  
+> **Версия:** 1.0  
+> **Время внедрения:** 22 октября 2025  
+
+#### **🚀 Быстрый старт:**
+```bash
+# Конвертация одного документа
+python scripts/mcp-integration/docling-workflow.py \
+  --input "D:/documents/техническое_задание.pdf" \
+  --output "cache/docling-output/" \
+  --extract-images
+
+# Пакетная обработка документов проекта
+python scripts/mcp-integration/docling-workflow.py \
+  --batch \
+  --input-dir "Документация по фреймворку/" \
+  --output-dir "cache/markdown-docs/" \
+  --file-pattern "*.pdf"
+```
+
+#### **📊 Поддерживаемые форматы:**
+- **PDF** - включая сканированные документы с OCR
+- **DOCX/DOC** - Microsoft Word документы  
+- **PPTX/PPT** - PowerPoint презентации
+- **XLSX/XLS** - Excel таблицы с извлечением данных
+- **HTML** - веб-страницы и HTML отчёты
+- **RTF** - Rich Text Format документы
+
+#### **🔧 Возможности обработки:**
+- **OCR (Оптическое распознавание)** для сканированных документов
+- **Извлечение изображений** с сохранением структуры
+- **Обработка таблиц** с конвертацией в Markdown/CSV/JSON
+- **Анализ структуры документа** (заголовки, разделы, метаданные)
+- **Сохранение форматирования** при конвертации в Markdown
+
+#### **💡 Практические сценарии для 1С:**
+1. **Техническая документация** - конвертация ТЗ, спецификаций, регламентов
+2. **Отчёты анализа** - обработка результатов BSL Language Server
+3. **Knowledge Base** - создание базы знаний из корпоративных документов
+4. **API документация** - конвертация PDF документации 1С в Markdown
+
+#### **🔗 MCP Commands:**
+```javascript
+// Основная конвертация
+mcp__docling__convert_document({
+  input_path: "D:/docs/specification.pdf",
+  output_path: "cache/spec.md",
+  extract_images: true,
+  ocr_enabled: true
+})
+
+// Пакетная обработка
+mcp__docling__batch_convert({
+  input_dir: "D:/project-docs/",
+  output_dir: "cache/markdown/",
+  file_pattern: "*.{pdf,docx,pptx}",
+  extract_images: false
+})
+
+// Анализ структуры без конвертации
+mcp__docling__analyze_document_structure({
+  input_path: "D:/technical-requirements.docx",
+  include_content: false
+})
+
+// Извлечение только таблиц
+mcp__docling__extract_tables({
+  input_path: "D:/data-analysis.xlsx",
+  output_format: "json"  // или "csv", "markdown"
+})
+
+// Статус операций
+mcp__docling__get_conversion_status({
+  job_id: "conversion_123"  // опционально
+})
+```
+
+#### **⚙️ Интеграция с другими MCP:**
+```bash
+# Workflow: Docling → Memory MCP → Knowledge Graph
+python scripts/mcp-integration/docling-workflow.py --input "docs/" --batch
+python scripts/mcp-integration/docling-memory-integration.py \
+  --source "cache/docling-output/" \
+  --entity-type "documentation" \
+  --save-to-graph
+
+# Workflow: BSL Analysis → Docling → Reports
+python -m sonar_integration analyze --src-dir src/ --output-format json
+python scripts/mcp-integration/docling-workflow.py \
+  --input "reports/analysis.json" \
+  --output "cache/analysis-docs/" \
+  --convert-json-to-markdown
+```
+
+#### **📁 Структура выходных файлов:**
+```
+cache/docling-output/
+├── document_name.md          # Основной Markdown файл
+├── images/                   # Извлечённые изображения
+│   ├── image_001.png
+│   └── image_002.jpg
+├── tables/                   # Извлечённые таблицы
+│   ├── table_001.csv
+│   └── table_002.json
+└── metadata.json            # Метаданные документа
+```
+
+#### **🎯 Использование в проектах 1С:**
+```bash
+# Обработка технического задания
+python scripts/mcp-integration/docling-workflow.py \
+  --input "ТЗ_Доработка_Конфигурации.pdf" \
+  --output "cache/project-docs/" \
+  --extract-images \
+  --save-metadata
+
+# Конвертация корпоративных стандартов  
+python scripts/mcp-integration/docling-workflow.py \
+  --batch \
+  --input-dir "Стандарты разработки/" \
+  --output-dir "cache/standards-md/" \
+  --file-pattern "*.{pdf,docx}"
+
+# Создание Knowledge Graph из документации
+python scripts/mcp-integration/docling-memory-integration.py \
+  --source "cache/standards-md/" \
+  --entity-type "corporate_standard" \
+  --create-relations \
+  --save-to-graph
+```
+
+#### **📈 Производительность:**
+- **Обычные PDF**: 1-5 страниц/секунда
+- **С OCR**: 0.5-2 страницы/секунда  
+- **DOCX/PPTX**: 10-50 страниц/секунда
+- **Пакетная обработка**: до 100 документов параллельно
+- **Память**: 100-500 MB на документ (в зависимости от размера)
+
+**📚 Документация:** `scripts/mcp-integration/docling-workflow.py`, `cache/docling-output/`
+
+### **✅ Фаза 3: Продвинутые MCP инструменты (ГОТОВО):**
+
+#### **Sequential Thinking MCP** - Сложное мышление для 1С задач
+```javascript
+// Пошаговый анализ архитектуры
+mcp__sequential-thinking__sequentialthinking({
+  thought: "Анализирую структуру подсистем конфигурации для оптимизации зависимостей",
+  thoughtNumber: 1,
+  totalThoughts: 10,
+  nextThoughtNeeded: true
+})
+
+// Использование: декомпозиция задач, планирование рефакторинга, анализ производительности
+```
+
+#### **Memory MCP** - Knowledge Graph для метаданных 1С
+```javascript
+// Создание сущностей
+mcp__memory__create_entities([{
+  name: "Справочник.Номенклатура",
+  entityType: "metadata_object",
+  observations: ["Используется в 15 документах", "Имеет 3 табличные части"]
+}])
+
+// Создание связей
+mcp__memory__create_relations([{
+  from: "Документ.РеализацияТоваров",
+  to: "Справочник.Номенклатура",
+  relationType: "references"
+}])
+
+// Поиск по графу
+mcp__memory__search_nodes("Номенклатура")
+mcp__memory__read_graph()  // Полный граф
+```
+
+#### **Playwright Automation MCP** - Тестирование веб-интерфейса
+```javascript
+// Навигация и взаимодействие
+mcp__playwright-automation__playwright_navigate({
+  url: "http://localhost/infobase",
+  browserType: "chromium"
+})
+
+mcp__playwright-automation__playwright_click({selector: "#LoginButton"})
+mcp__playwright-automation__playwright_fill({selector: "#Username", value: "Администратор"})
+mcp__playwright-automation__playwright_screenshot({name: "test-result", savePng: true})
+
+// HTTP API тестирование
+mcp__playwright-automation__playwright_post({
+  url: "http://localhost/infobase/hs/api/v1/documents",
+  value: JSON.stringify({data: "..."}),
+  token: "Bearer YOUR_TOKEN"
+})
+```
+
+#### **Docling MCP** - Конвертация документов для RAG
+```javascript
+// Конвертация PDF в Markdown
+mcp__docling__convert_document({
+  input_path: "D:/documents/report.pdf",
+  output_path: "D:/cache/report.md",
+  extract_images: true,
+  ocr_enabled: true
+})
+
+// Пакетная обработка документов
+mcp__docling__batch_convert({
+  input_dir: "D:/documents/",
+  output_dir: "D:/cache/markdown/",
+  file_pattern: "*.pdf"
+})
+
+// Анализ структуры документа
+mcp__docling__analyze_document_structure({
+  input_path: "D:/documents/specs.docx",
+  include_content: false
+})
+
+// Извлечение таблиц
+mcp__docling__extract_tables({
+  input_path: "D:/documents/data.xlsx",
+  output_format: "markdown"
+})
+```
+
+**Документация:**
+- `tests/playwright/` - примеры автотестов для 1С веб-клиента
+- `scripts/mcp-integration/` - скрипты интеграции MCP с BSL и Task Master
+- `cache/docling-output/` - результаты конвертации документов
+- `scripts/mcp-integration/docling-workflow.py` - основной workflow конвертации
+
+### **💡 Интеграция MCP с инструментами фреймворка:**
+
+#### **BSL + Memory Integration**
+```bash
+# Сохранение результатов BSL анализа в Knowledge Graph
+python -m sonar_integration analyze --src-dir . --output-dir reports/
+python scripts/mcp-integration/bsl-memory-integration.py reports/analysis.json
+```
+
+#### **Task Master + Sequential Thinking**
+```bash
+# Автоматическая декомпозиция сложных задач
+cd claude-task-master
+npx task-master next  # Получить задачу
+node ../scripts/mcp-integration/taskmaster-thinking-integration.js
+```
+
+#### **Docling + Memory Integration**
+```bash
+# Обработка технической документации 1С с сохранением в Knowledge Graph
+python scripts/mcp-integration/docling-workflow.py --input "docs/" --batch
+python scripts/mcp-integration/docling-memory-integration.py --source "cache/docling-output/" --save-to-graph
+
+# Конвертация отчётов анализа кода в Markdown для RAG
+python scripts/mcp-integration/docling-workflow.py --input "reports/analysis.json" --output "cache/analysis-docs/"
+```
+
+#### **Полный workflow разработки**
+```bash
+# 1. Анализ кода → 2. Сохранение в граф → 3. Планирование → 4. Тестирование → 5. Документация
+python -m sonar_integration analyze --src-dir src/
+python scripts/mcp-integration/bsl-memory-integration.py reports/analysis.json
+python scripts/mcp-integration/docling-workflow.py --input "reports/" --batch
+cd claude-task-master && npx task-master next
+# См. примеры тестов в tests/playwright/examples/
+```
+
+## 💡 Best Practices
+
+### **For 1C Development:**
+- Always run BSL analysis before committing code
+- Use meaningful variable and function names in Russian (1C standard)
+- Follow BSL Language Server recommendations (793 rules available)
+- Implement proper error handling with Попытка...Исключение...КонецПопытки
+- Document architectural decisions in Task Master
+
+### **For Framework Usage:**
+- Start with working tools (BSL + Task Master + Development Automation)
+- Use Git hooks for automatic quality control
+- Reference framework documentation for best practices
+- Leverage automation tools for efficient development
+
+### **🎯 Real-world Usage Examples:**
+
+#### **Example 1: Analyzing existing 1C module**
+```bash
+# Step 1: Analyze code quality
+python -m sonar_integration analyze --src-dir "src/projects/configuration/CommonModules/UtilsModule.bsl"
+
+# Step 2: Create task for improvements
+cd claude-task-master
+npx task-master add-task --title "Refactor UtilsModule" --description "Fix BSL issues found in analysis"
+
+# Step 3: Apply development automation
+# Claude automatically provides intelligent analysis and guidance
+```
+
+#### **Example 2: Starting new 1C project**
+```bash
+# Step 1: Set up project validation
+bash scripts/validate-project.sh
+
+# Step 2: Initialize Task Master for project
+cd claude-task-master  
+npx task-master parse-prd "requirements.md"
+
+# Step 3: Get first development task
+npx task-master next
+# Claude provides intelligent guidance for development workflow
+```
+
+#### **Example 3: Code review workflow**
+```bash
+# Step 1: Pre-commit analysis (automatic via Git hooks)
+git add CommonModule.bsl
+git commit -m "feat: new utility functions"
+# Git hook automatically runs BSL analysis
+
+# Step 2: Manual quality check if needed
+python -m sonar_integration analyze --src-dir . --severity BLOCKER,CRITICAL
+
+# Step 3: Document findings in Task Master
+npx task-master add-task --title "Fix critical BSL issues" --tag quality-control
+```
+
+#### **Example 4: Universal Web Scraper для изучения документации (NEW)**
+```bash
+# Парсинг документации 1С с портала ITS
+mcp__universal-web-scraper__scrape_website({
+  "url": "https://its.1c.ru/db/metod8dev/content/5873/hdoc",
+  "adapter_type": "its_1c",
+  "include_links": true,
+  "save_to_memory": true
+})
+
+# Анализ структуры сайта перед парсингом
+mcp__universal-web-scraper__analyze_website_structure({
+  "url": "https://docs.1c.ru",
+  "deep_analysis": true
+})
+
+# Пакетный парсинг технических статей
+mcp__universal-web-scraper__bulk_scrape_websites({
+  "urls": [
+    "https://its.1c.ru/db/metod8dev",
+    "https://its.1c.ru/db/expertguide",
+    "https://its.1c.ru/db/pubmethodique"
+  ],
+  "concurrent_limit": 2,
+  "delay_between_requests": 3
+})
+```
+
+#### **Example 5: 1C Documentation Parser для полного извлечения (NEW)**
+```bash
+# Парсинг конкретной главы документации
+cd scripts/1c-docs-parser
+python automated-parser.py 4  # Глава 4: Встроенный язык
+
+# Использование универсальных функций для кастомного парсинга
+node -e "
+const {extractHierarchicalStructure, saveStructureToJSON} = require('./universal-functions.js');
+// Извлечение структуры и сохранение в JSON
+"
+
+# Интеграция с Memory MCP для создания Knowledge Graph
+python scripts/mcp-integration/docs-memory-integration.py \
+  --source "Проекты/1C-Platform-Doc-Parser" \
+  --entity-type "1c_documentation" \
+  --save-to-graph
+```
+
+#### **Example 6: Playwright автотестирование (NEW)**
+```bash
+# Использование MCP команд для тестирования веб-интерфейса 1С
+# См. примеры: tests/playwright/examples/01-example-login.md
+# См. примеры: tests/playwright/examples/02-example-document-form.md
+# См. примеры: tests/playwright/examples/03-example-rest-api-test.md
+
+# Генерация тестового кода
+mcp__playwright-automation__start_codegen_session({
+  options: {outputPath: "tests/playwright/generated/", testNamePrefix: "1C_Test"}
+})
+```
+
+---
+
+**Framework Version**: 2025.10.23 UNIVERSAL DOCUMENTATION PARSER v2.0 COMPLETE
+**Last Updated**: October 23, 2025
+**Status**: ✅ Ready for production use (96% framework completion)
+**Compatibility**: Claude Code, 1C:Enterprise 8.3+, BSL Language Server, MCP Reasoner v2.0.0, Docling MCP v1.0, Universal Web Scraper MCP v1.0, Universal Documentation Parser v2.0
+
+---
+
+## 🎉 Фаза 5 ЗАВЕРШЕНА - UNIVERSAL WEB SCRAPER & 1C DOCS PARSER INTEGRATION
+
+**Внедрено:**
+- ✅ Sequential Thinking MCP - сложное пошаговое мышление
+- ✅ Memory MCP - Knowledge Graph с 11 сущностями фреймворка
+- ✅ Playwright Automation MCP - автотестирование веб-интерфейса
+- ✅ **MCP Reasoner v2.0.0** - глубокий анализ кода с MCTS и Beam Search (12.10.2025)
+- ✅ **Docling MCP v1.0** - конвертация документов (PDF, DOCX, PPTX) в Markdown для RAG (22.10.2025)
+- ✅ **🆕 Universal Web Scraper MCP v1.0** - интеллектуальный парсинг любых веб-сайтов с 5 адаптерами (23.10.2025)
+- ✅ **🆕 1C Documentation Parser v1.0** - универсальный парсер документации с портала its.1c.ru с сохранением иерархии (23.10.2025)
+- ✅ Интеграционные скрипты BSL + Memory, Task Master + Sequential Thinking + Reasoner
+- ✅ 3 примера Playwright тестов для 1С
+- ✅ 3 аналитических сценария для MCP Reasoner
+- ✅ Pipeline полного цикла анализа
+- ✅ **CI/CD Pipeline** - GitHub Actions с полной автоматизацией проверок (27.09.2025)
+
+**🆕 Новые возможности Фазы 5:**
+- **Universal Web Scraper MCP**: 5 интеллектуальных адаптеров (documentation, news, its_1c, ecommerce, generic)
+- **1C Documentation Parser**: алгоритм с 100% полнотой извлечения структуры H1-H5
+- **Автоматическое восстановление**: недостающих разделов при неполном парсинге
+- **Пакетный парсинг**: множественных сайтов с контролем нагрузки
+- **Knowledge Graph интеграция**: автоматическое сохранение результатов парсинга
+
+**Статистика Knowledge Graph:**
+- 15+ сущностей (фреймворк + новые MCP системы + парсеры)
+- 20+ связей между компонентами
+- Персистентное хранилище в cache/memory-graph.json
+
+**CI/CD Функциональность:**
+- 2 GitHub Actions workflows (quality check + daily reports)
+- Автоматические комментарии в PR с детальными результатами
+- Блокировка PR при BLOCKER ошибках
+- Ежедневные отчёты качества через GitHub Issues
+
+**Доказанная эффективность:**
+- ✅ **Глава 1 документации**: 39 заголовков, 63,887 символов - 100% полнота
+- ✅ **Глава 2 документации**: 63 заголовка, 101,967+ символов - 100% полнота
+- ✅ **Universal Web Scraper**: 5 различных типов сайтов протестированы
+- ✅ **Интеграция с Memory MCP**: автоматическое создание Knowledge Graph
+
+*This framework is ready for active use with comprehensive web scraping and documentation parsing capabilities.*

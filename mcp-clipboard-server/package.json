@@ -1,0 +1,17 @@
+{
+  "name": "mcp-clipboard-server",
+  "version": "1.0.0",
+  "description": "MCP Server for clipboard operations",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.19.1",
+    "clipboardy": "^5.0.0"
+  },
+  "keywords": ["mcp", "clipboard", "copy", "paste"],
+  "author": "1C-Enterprise Framework",
+  "license": "MIT"
+}

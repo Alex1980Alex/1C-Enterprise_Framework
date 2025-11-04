@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "memory": {
+      "command": "python",
+      "args": [
+        "D:/1C-Enterprise_Framework/ai-memory-system/mcp/memory_server.py"
+      ],
+      "env": {
+        "PYTHONIOENCODING": "utf-8"
+      }
+    }
+  }
+}

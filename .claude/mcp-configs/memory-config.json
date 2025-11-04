@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "memory-ai": {
+      "command": "C:/Users/AlexT/AppData/Local/Programs/Python/Python313/python.exe",
+      "args": [
+        "D:/1C-Enterprise_Framework/ai-memory-system/mcp/memory_server_fixed.py"
+      ],
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONPATH": "D:/1C-Enterprise_Framework/ai-memory-system/services"
+      }
+    }
+  }
+}

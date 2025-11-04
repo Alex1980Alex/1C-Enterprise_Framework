@@ -1,0 +1,84 @@
+{
+  "adapter": "its_1c",
+  "description": "Специализированный адаптер для сайта its.1c.ru",
+  "patterns": {
+    "domains": ["its.1c.ru"],
+    "urls": ["/docs/", "/articles/", "/infobases/", "/questions/"],
+    "indicators": ["ITS", "1C:Предприятие", "Техподдержка", "База знаний"]
+  },
+  "selectors": {
+    "title": [
+      ".article-title",
+      ".question-title", 
+      "h1.title",
+      ".page-header h1",
+      ".content-title"
+    ],
+    "content": [
+      ".article-content",
+      ".question-content",
+      ".answer-content",
+      ".main-content",
+      ".article-text"
+    ],
+    "metadata": [
+      ".article-info",
+      ".question-info",
+      ".tags",
+      ".category",
+      ".author-info"
+    ],
+    "attachments": [
+      ".attachments a",
+      ".files a",
+      "a[href$='.pdf']",
+      "a[href$='.doc']",
+      "a[href$='.docx']"
+    ],
+    "relatedArticles": [
+      ".related-articles a",
+      ".similar-questions a",
+      ".see-also a"
+    ]
+  },
+  "extraction": {
+    "removeElements": [
+      "script",
+      "style",
+      ".sidebar",
+      ".navigation",
+      ".footer",
+      ".header",
+      ".ads"
+    ],
+    "preserveStructure": true,
+    "extractCode": true,
+    "extractImages": true,
+    "extractAttachments": true,
+    "extractMetadata": true,
+    "minContentLength": 50
+  },
+  "crawling": {
+    "followInternalLinks": true,
+    "maxDepth": 2,
+    "respectRobotsTxt": true,
+    "delay": 2000,
+    "maxPages": 50,
+    "prioritizeTypes": ["articles", "docs", "infobases"]
+  },
+  "authentication": {
+    "required": false,
+    "loginUrl": "https://its.1c.ru/login",
+    "credentials": {
+      "username": "",
+      "password": ""
+    }
+  },
+  "output": {
+    "format": "markdown",
+    "includeMetadata": true,
+    "includeTimestamp": true,
+    "generateToc": false,
+    "saveAttachments": true
+  }
+}

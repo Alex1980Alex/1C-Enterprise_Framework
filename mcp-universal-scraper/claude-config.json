@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "universal-scraper": {
+      "command": "node",
+      "args": ["D:/1C-Enterprise_Framework/mcp-universal-scraper/src/index.js"],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  }
+}

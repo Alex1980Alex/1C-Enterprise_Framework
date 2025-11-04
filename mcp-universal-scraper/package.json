@@ -1,0 +1,26 @@
+{
+  "name": "mcp-universal-scraper",
+  "version": "1.0.0",
+  "description": "Universal Web Scraper MCP Server - scrape any website with intelligent adapters",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "build": "echo 'No build step needed'",
+    "test": "echo 'Tests not implemented yet'"
+  },
+  "keywords": ["mcp", "web-scraping", "universal", "playwright", "documentation"],
+  "author": "1C-Enterprise Framework",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "playwright": "^1.40.0",
+    "cheerio": "^1.0.0-rc.12",
+    "turndown": "^7.1.2",
+    "url-parse": "^1.5.10"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "universal-web-scraper": {
+      "command": "node",
+      "args": ["src/index.js"],
+      "cwd": "mcp-universal-scraper",
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "Universal Web Scraper",
+        "MCP_SERVER_VERSION": "1.0.0",
+        "SCRAPER_LOG_LEVEL": "info",
+        "SCRAPER_CACHE_ENABLED": "true",
+        "SCRAPER_MAX_CONCURRENCY": "5",
+        "SCRAPER_DEFAULT_TIMEOUT": "30000",
+        "SCRAPER_RESPECT_ROBOTS": "true"
+      }
+    }
+  }
+}

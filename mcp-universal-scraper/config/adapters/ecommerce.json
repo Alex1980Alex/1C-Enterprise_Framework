@@ -1,0 +1,86 @@
+{
+  "adapter": "ecommerce",
+  "description": "Адаптер для интернет-магазинов и каталогов товаров",
+  "patterns": {
+    "domains": ["shop.", "store.", "market.", "catalog."],
+    "urls": ["/product/", "/item/", "/catalog/", "/category/"],
+    "indicators": ["price", "cart", "buy", "add to cart", "товар", "цена"]
+  },
+  "selectors": {
+    "title": [
+      ".product-title",
+      "h1.product-name",
+      ".item-title",
+      ".product-heading"
+    ],
+    "price": [
+      ".price",
+      ".product-price",
+      ".cost",
+      ".amount",
+      "[data-price]"
+    ],
+    "description": [
+      ".product-description",
+      ".item-description",
+      ".product-details",
+      ".description"
+    ],
+    "specifications": [
+      ".specifications",
+      ".product-specs",
+      ".characteristics",
+      ".features"
+    ],
+    "images": [
+      ".product-images img",
+      ".gallery img",
+      ".product-gallery img"
+    ],
+    "availability": [
+      ".availability",
+      ".stock",
+      ".in-stock",
+      ".out-of-stock"
+    ],
+    "reviews": [
+      ".reviews",
+      ".customer-reviews",
+      ".rating",
+      ".feedback"
+    ]
+  },
+  "extraction": {
+    "removeElements": [
+      "script",
+      "style",
+      ".advertisement",
+      ".sidebar",
+      ".footer",
+      ".navigation",
+      ".popup"
+    ],
+    "preserveStructure": true,
+    "extractCode": false,
+    "extractImages": true,
+    "extractLinks": false,
+    "minContentLength": 50,
+    "structuredData": true
+  },
+  "crawling": {
+    "followInternalLinks": false,
+    "maxDepth": 1,
+    "respectRobotsTxt": true,
+    "delay": 2000,
+    "maxPages": 10,
+    "avoidDuplicates": true
+  },
+  "output": {
+    "format": "json",
+    "includeMetadata": true,
+    "includeTimestamp": true,
+    "includePrice": true,
+    "includeImages": true,
+    "includeSpecs": true
+  }
+}
